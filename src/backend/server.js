@@ -1,11 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const router = require("./routes/router");
 const app = express();
 
-const router = require("./routes/router");
 app.use(bodyParser.json());
-
 app.use("/api", router);
 
 app.listen(8080, () => {

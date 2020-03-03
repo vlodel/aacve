@@ -21,17 +21,20 @@ sequelize
 
 class User extends Sequlize.Model {}
 
-User.init({
-  email: {
-    type: Sequlize.STRING,
-    allowNull: false,
-    unique: true
+User.init(
+  {
+    email: {
+      type: Sequlize.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: Sequlize.STRING,
+      allowNull: false
+    }
   },
-  password: {
-    type: Sequlize.STRING,
-    allowNull: false
-  }
-});
+  { sequelize, modelName: "user" }
+);
 
 sequelize.sync();
 
