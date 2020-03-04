@@ -1,7 +1,7 @@
-const Sequlize = require("sequelize");
-const constants = require("../constants");
+const { Sequelize, DataTypes } = require('sequelize');
+const constants = require('../constants');
 
-const sequelize = new Sequlize(
+const sequelize = new Sequelize(
   constants.DATABASE_NAME,
   constants.USERNAME,
   constants.PASSWORD,
@@ -13,28 +13,40 @@ const sequelize = new Sequlize(
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connection succseful");
+    console.log('Connection to database has been established succesfully');
   })
   .catch(err => {
-    console.log("Error connecting to database:" + err.message);
+    console.log('Unable to connect to database: ', err);
   });
 
-class User extends Sequlize.Model {}
+// class User extends Sequelize.Model {}
 
-User.init(
-  {
-    email: {
-      type: Sequlize.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: Sequlize.STRING,
-      allowNull: false
-    }
+// User.init(
+//   {
+//     email: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       unique: true
+//     },
+//     password: {
+//       type: DataTypes.STRING,
+//       allowNull: false
+//     }
+//   },
+//   { sequelize, modelName: 'user' }
+// );
+
+const User = sequelize.define('User', {
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
-  { sequelize, modelName: "user" }
-);
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+});
 
 sequelize.sync();
 
