@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
   constants.USERNAME,
   constants.PASSWORD,
   {
-    dialect: constants.DIALECT
+    dialect: constants.DIALECT,
   }
 );
 
@@ -15,7 +15,7 @@ sequelize
   .then(() => {
     console.log('Connection to database has been established succesfully');
   })
-  .catch(err => {
+  .catch((err) => {
     console.log('Unable to connect to database: ', err);
   });
 
@@ -37,20 +37,28 @@ sequelize
 // );
 
 const User = sequelize.define('User', {
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 sequelize.sync();
 
 module.exports = {
   sequelize,
-  User
+  User,
 };

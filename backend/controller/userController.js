@@ -6,9 +6,17 @@ const saltRounds = 10;
 const createUser = async (req, res) => {
   const user = req.body;
 
-  if (user.email && user.password) {
-    await userService.UserService.createUser(user);
-    res.status(201).send({ message: 'User added succsefully' });
+  if (user.firstName && user.lastName && user.email && user.password) {
+    bcrypt.hash(user.password, saltRounds, async (err, hash) => {
+      user.password = hash;
+      const result = await userService.UserService.createUser(user);
+
+      if (result.exists == true) {
+        res.status(400).send({ message: 'User already exists' });
+      } else {
+        res.status(201).send({ message: 'User added succsefully' });
+      }
+    });
   } else {
     res.status(400).send({ message: 'Invalid payload' });
   }
@@ -17,8 +25,13 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   const inputUser = req.body;
 
-  if (inputUser.email && inputUser.password) {
-    const resultUser = await userService.user.authUser(inputUser);
+  if (
+    inputUser.firstName &&
+    inputUser.lastName &&
+    inputUser.email &&
+    inputUser.password
+  ) {
+    const resultUser = await userService.UserService.loginUser(inputUser);
 
     if (resultUser) {
       bcrypt.compare(inputUser.password, resultUser.password, (err, result) => {
@@ -36,5 +49,5 @@ const loginUser = async (req, res) => {
 
 module.exports = {
   createUser,
-  loginUser
+  loginUser,
 };
