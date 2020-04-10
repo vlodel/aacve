@@ -11,28 +11,6 @@ app.listen(8080, () => {
   console.log('Server started on port 8080...');
 });
 
-const https = require('https');
-const fs = require('fs');
-const req = require('request');
-const { parse } = require('node-html-parser');
+const cveProvider = require('./cveProvider');
 
-req(
-  {
-    uri: 'https://cve.mitre.org/data/downloads/index.html',
-  },
-  (error, response, body) => {
-    const html = parse(body);
-    const lastDownloadedDataInformation = html.querySelector('.smaller');
-    console.log(lastDownloadedDataInformation.text);
-  }
-);
-
-const file = fs.createWriteStream('allitems.xml');
-
-const request = https.get(
-  'https://cve.mitre.org/data/downloads/allitems.xml',
-  (res) => {
-    res.pipe(file);
-    console.log('Finished updating cve entries.');
-  }
-);
+cveProvider.getCveFiles();
