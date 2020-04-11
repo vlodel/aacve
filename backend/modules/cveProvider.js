@@ -7,6 +7,7 @@ const requestFile = (URL) => {
   https.get(URL, (result) => {
     result.pipe(unzipper.Extract({ path: './cves' }));
   });
+  console.log(`${URL} downloaded.`);
 };
 
 const cveProvider = async () => {

@@ -1,18 +1,18 @@
-const { User } = require('../model/user');
+const { User } = require('../sequelize');
 
-class UserService {
-  static async createUser(newUser) {
+const user = {
+  createUser: async (newUser) => {
     try {
       const existingUser = await User.findOne({
         where: {
-          email: newUser.email
-        }
+          email: newUser.email,
+        },
       });
 
       if (!existingUser) {
         return await User.create({
           email: newUser.email,
-          password: newUser.password
+          password: newUser.password,
         });
       } else {
         existingUser.exists = true;
@@ -21,23 +21,21 @@ class UserService {
     } catch (err) {
       throw new Error(err);
     }
-  }
+  },
 
-  static async loginUser(user) {
+  loginUser: async (user) => {
     try {
       const result = await User.findOne({
         where: {
-          email: user.email
-        }
+          email: user.email,
+        },
       });
 
       return result;
     } catch (err) {
       throw new Error(err);
     }
-  }
-}
-
-module.exports = {
-  UserService
+  },
 };
+
+module.exports = user;
