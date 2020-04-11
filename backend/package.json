@@ -20,6 +20,8 @@
     "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "got": "^10.7.0",
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.7",
     "mysql2": "^2.1.0",
     "node-html-parser": "^1.2.8",
     "nodemon": "^2.0.2",
