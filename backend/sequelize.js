@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 const constants = require('./constants');
 const userModel = require('./models/user');
-const cveModel = require('./models/cve');
+const cveModel = require('./models/cveSequelizeDontUse');
 
 const sequelize = new Sequelize(
   constants.DATABASE_NAME,
