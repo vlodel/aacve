@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -7,11 +7,8 @@ import {
   Typography,
   Container,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Button,
   Link,
-  Grid,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,29 +27,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login(props) {
+function Register() {
   const classes = useStyles();
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const history = useHistory();
 
-  const handleLoginClick = () => {
+  const handleRegisterClick = () => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/login`, {
+      .post(`${process.env.REACT_APP_API_URL}/register`, {
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         password: password,
       })
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log(response.data.message);
-          props.onAuthStateChange(true);
-          history.push('/home');
+          history.push('/login');
         }
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err);
       });
   };
 
@@ -61,9 +61,29 @@ function Login(props) {
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Login
+          Register
         </Typography>
         <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="firstName"
+            label="First name"
+            name="firstName"
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label="Last name"
+            name="lastName"
+            onChange={(event) => setLastName(event.target.value)}
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -84,12 +104,7 @@ function Login(props) {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
             onChange={(event) => setPassword(event.target.value)}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
           />
           <Button
             type="button"
@@ -97,25 +112,14 @@ function Login(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => handleLoginClick()}
+            onClick={() => handleRegisterClick()}
           >
-            Login
+            Register
           </Button>
-          <Grid container justify="center">
-            <Grid item>
-              <Link
-                to="/register"
-                variant="body1"
-                onClick={() => history.push('/register')}
-              >
-                No account? Reigster
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
   );
 }
 
-export default Login;
+export default Register;

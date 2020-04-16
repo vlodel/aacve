@@ -11,6 +11,8 @@ const user = {
 
       if (!existingUser) {
         return await User.create({
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
           email: newUser.email,
           password: newUser.password,
         });
