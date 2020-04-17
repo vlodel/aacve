@@ -9,6 +9,7 @@ import {
   TextField,
   Button,
   Link,
+  Grid,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +31,10 @@ const useStyles = makeStyles((theme) => ({
 function Register() {
   const classes = useStyles();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
   const history = useHistory();
 
@@ -45,9 +46,9 @@ function Register() {
         email: email,
         password: password,
       })
-      .then((response) => {
-        if (response.status === 201) {
-          console.log(response.data.message);
+      .then((result) => {
+        if (result.status === 201) {
+          console.log(result.data.message);
           history.push('/login');
         }
       })
@@ -116,6 +117,17 @@ function Register() {
           >
             Register
           </Button>
+          <Grid container justify="center">
+            <Grid item>
+              <Link
+                to="/login"
+                variant="body1"
+                onClick={() => history.push('/login')}
+              >
+                Already have an account? Login
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
     </Container>

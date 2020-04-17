@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../context/auth';
 import {
   CssBaseline,
   Typography,
@@ -33,10 +34,15 @@ const useStyles = makeStyles((theme) => ({
 function Login(props) {
   const classes = useStyles();
 
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setAuthTokens } = useAuth();
 
   const history = useHistory();
+
+  //TODO: check if
 
   const handleLoginClick = () => {
     axios
@@ -44,17 +50,24 @@ function Login(props) {
         email: email,
         password: password,
       })
-      .then((response) => {
-        if (response.status === 200) {
-          console.log(response.data.message);
-          props.onAuthStateChange(true);
-          history.push('/home');
+      .then((result) => {
+        if (result.status === 200) {
+          console.log(result.data);
+          setAuthTokens(result.data.accessToken);
+          setLoggedIn(true);
+        } else {
+          setIsError(true);
         }
       })
       .catch((err) => {
         console.log(err.message);
+        setIsError(true);
       });
   };
+
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">

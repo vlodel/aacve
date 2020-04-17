@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
-
+const jwt = require('jsonwebtoken');
+const config = require('../config/authConfig');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -31,9 +32,19 @@ const loginUser = async (req, res) => {
     if (resultUser) {
       bcrypt.compare(inputUser.password, resultUser.password, (err, result) => {
         if (result == true) {
-          res.status(200).send({ message: 'Login successful' });
+          var token = jwt.sign({ email: inputUser.email }, config.secret, {
+            expiresIn: 86400,
+          });
+
+          res.status(200).send({
+            message: 'Login successful',
+            email: resultUser.email,
+            accessToken: token,
+          });
         } else {
-          res.status(404).send({ message: 'Incorrect password' });
+          res
+            .status(404)
+            .send({ message: 'Incorrect password', accessToken: null });
         }
       });
     } else {
