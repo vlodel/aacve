@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     marginTop: theme.spacing(1),
   },
-  submit: {
+  button: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
@@ -39,30 +39,89 @@ function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setAuthTokens } = useAuth();
+  const { setCurrentUser } = useAuth();
 
   const history = useHistory();
 
-  //TODO: check if
+  const handleLoginClick = async () => {
+    // fetch(`${process.env.REACT_APP_API_URL}/login`, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     email: email,
+    //     password: password,
+    //   }),
+    // })
+    //   .then(async (response) => {
+    //     if (response.status === 200) {
+    //       const result = await response.json();
+    //       setIsError(false);
+    //       setAuthTokens(result.accessToken);
+    //       setLoggedIn(true);
+    //       setCurrentUser({
+    //         email: result.email,
+    //         firstName: result.firstName,
+    //         lastName: result.lastName,
+    //       });
+    //     } else {
+    //       setIsError(true);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
-  const handleLoginClick = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/login`, {
+    const result = await axios({
+      method: 'POST',
+      url: `${process.env.REACT_APP_API_URL}/login`,
+      data: {
         email: email,
         password: password,
-      })
-      .then((result) => {
-        if (result.status === 200) {
-          console.log(result.data);
-          setAuthTokens(result.data.accessToken);
-          setLoggedIn(true);
-        } else {
-          setIsError(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setIsError(true);
+      },
+    });
+
+    if (result.status === 200) {
+      console.log(result.data);
+      setIsError(false);
+      setAuthTokens(result.data.accessToken);
+      setLoggedIn(true);
+      setCurrentUser({
+        email: result.data.email,
+        firstName: result.data.firstName,
+        lastName: result.data.lastName,
       });
+    } else {
+      setIsError(true);
+    }
+
+    //NOT WORKING ON MOBILE
+    // axios
+    //   .post(
+    //     `${process.env.REACT_APP_API_URL}/login`,
+    //     {
+    //       email: email,
+    //       password: password,
+    //     },
+    //     { withCredentials: true }
+    //   )
+    //   .then((result) => {
+    //     if (result.status === 200) {
+    //       console.log(result.data);
+    //       setAuthTokens(result.data.accessToken);
+    //       setLoggedIn(true);
+    //       setCurrentUser({
+    //         email: result.data.email,
+    //         firstName: result.data.firstName,
+    //         lastName: result.data.lastName,
+    //       });
+    //     } else {
+    //       setIsError(true);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.message);
+    //     setIsError(true);
+    //   });
   };
 
   if (isLoggedIn) {
@@ -76,7 +135,7 @@ function Login(props) {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -106,11 +165,13 @@ function Login(props) {
           />
           <Button
             type="button"
+            onClick={() => {
+              handleLoginClick();
+            }}
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-            onClick={() => handleLoginClick()}
+            className={classes.button}
           >
             Login
           </Button>

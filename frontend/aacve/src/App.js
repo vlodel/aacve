@@ -14,32 +14,6 @@ import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 
 function App(props) {
-  // const [authState, setAuthState] = useState(null);
-
-  // const handleAuthStateChange = (newValue) => {
-  //   setAuthState(newValue);
-  // };
-
-  // return (
-  //   <Router>
-  //     <Switch>
-  //       <Redirect exact from="/" to={authState ? '/home' : '/login'} />
-  //       <Route
-  //         path="/login"
-  //         render={(props) => (
-  //           <Login
-  //             {...props}
-  //             authState={authState}
-  //             onAuthStateChange={handleAuthStateChange}
-  //           />
-  //         )}
-  //       />
-  //       <Route path="/register" component={Register} />
-  //       <Route path="/home" component={Home} />
-  //     </Switch>
-  //   </Router>
-  // );
-
   const existingTokens = JSON.parse(localStorage.getItem('tokens'));
   const [authTokens, setAuthTokens] = useState(existingTokens);
 
@@ -48,15 +22,23 @@ function App(props) {
     setAuthTokens(data);
   };
 
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const setUser = (user) => {
+    setCurrentUser(user);
+  };
+
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+    <AuthContext.Provider
+      value={{
+        authTokens,
+        setAuthTokens: setTokens,
+        currentUser,
+        setCurrentUser: setUser,
+      }}
+    >
       <Router>
         <div>
-          {/* <ul>
-            <li>
-              <Link to="/home">Home Page</Link>
-            </li>
-          </ul> */}
           <Redirect to="/home" />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
