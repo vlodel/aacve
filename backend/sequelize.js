@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize');
 const dbConfig = require('./config/dbConfig');
 const userModel = require('./models/user');
-const cveModel = require('./models/cveSequelizeDontUse');
 
 const sequelize = new Sequelize(
   dbConfig.DATABASE_NAME,
@@ -15,7 +14,9 @@ const sequelize = new Sequelize(
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connection to database has been established succesfully');
+    console.log(
+      'Connection to MySQL database has been established succesfully'
+    );
   })
   .catch((err) => {
     console.log('Unable to connect to database: ', err);

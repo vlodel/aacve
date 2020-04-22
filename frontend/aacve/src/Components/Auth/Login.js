@@ -44,33 +44,6 @@ function Login(props) {
   const history = useHistory();
 
   const handleLoginClick = async () => {
-    // fetch(`${process.env.REACT_APP_API_URL}/login`, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     email: email,
-    //     password: password,
-    //   }),
-    // })
-    //   .then(async (response) => {
-    //     if (response.status === 200) {
-    //       const result = await response.json();
-    //       setIsError(false);
-    //       setAuthTokens(result.accessToken);
-    //       setLoggedIn(true);
-    //       setCurrentUser({
-    //         email: result.email,
-    //         firstName: result.firstName,
-    //         lastName: result.lastName,
-    //       });
-    //     } else {
-    //       setIsError(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     const result = await axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API_URL}/login`,
@@ -93,35 +66,6 @@ function Login(props) {
     } else {
       setIsError(true);
     }
-
-    //NOT WORKING ON MOBILE
-    // axios
-    //   .post(
-    //     `${process.env.REACT_APP_API_URL}/login`,
-    //     {
-    //       email: email,
-    //       password: password,
-    //     },
-    //     { withCredentials: true }
-    //   )
-    //   .then((result) => {
-    //     if (result.status === 200) {
-    //       console.log(result.data);
-    //       setAuthTokens(result.data.accessToken);
-    //       setLoggedIn(true);
-    //       setCurrentUser({
-    //         email: result.data.email,
-    //         firstName: result.data.firstName,
-    //         lastName: result.data.lastName,
-    //       });
-    //     } else {
-    //       setIsError(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.message);
-    //     setIsError(true);
-    //   });
   };
 
   if (isLoggedIn) {

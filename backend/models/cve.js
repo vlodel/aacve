@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cveSchema = new mongoose.Schema(
+module.exports = new mongoose.Schema(
   {
     id: {
       type: String,
@@ -197,7 +197,3 @@ const cveSchema = new mongoose.Schema(
   },
   { _id: false }
 );
-
-const cveModel = mongoose.model('cve', cveSchema);
-
-module.exports = cveModel;
