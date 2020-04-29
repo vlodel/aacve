@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import { useAuth } from '../context/auth';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +17,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import Pagination from '@material-ui/lab/Pagination';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -78,16 +83,65 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  list: {
+    margin: theme.spacing(3),
+  },
 }));
 
 function Home() {
   const classes = useStyles();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const { setAuthTokens } = useAuth();
+  const [noOfPages, setNoOfPages] = useState(1);
+  const [pageNo, setPageNo] = useState(1);
+  const [currentCves, setCurrentCves] = useState([]);
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API_URL}/getNoOfPages`,
+    }).then((result) => {
+      if (result.status === 200) {
+        setNoOfPages(result.data);
+      }
+    });
+
+    axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API_URL}/getCves/1`,
+    }).then((result) => {
+      setCurrentCves(result.data);
+    });
+  }, []);
+
+  const handleLogOut = () => {
+    setAuthTokens(null);
+  };
+
+  const handlePageChange = async (event, page) => {
+    setPageNo(page);
+
+    const result = await axios({
+      method: 'GET',
+      url: `${process.env.REACT_APP_API_URL}/getCves/${page}`,
+    });
+    history.push(`/home/${page}`);
+    setCurrentCves(result.data);
+  };
+
+  const displayCurrentCves = () => {
+    return currentCves.map((cve) => (
+      <ListItem key={cve.id} divider="true">
+        <ListItemText primary={cve.id}></ListItemText>
+      </ListItem>
+    ));
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -103,12 +157,6 @@ function Home() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const { setAuthTokens } = useAuth();
-
-  const handleLogOut = () => {
-    setAuthTokens(null);
   };
 
   const menuId = 'home-account-menu';
@@ -205,6 +253,14 @@ function Home() {
           </div>
         </Toolbar>
       </AppBar>
+      <List className={classes.list}>
+        {displayCurrentCves()}
+        <Pagination
+          count={noOfPages}
+          color="primary"
+          onChange={handlePageChange}
+        />
+      </List>
       {renderMobileMenu}
       {renderMenu}
     </div>

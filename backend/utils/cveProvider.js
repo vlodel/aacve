@@ -21,8 +21,8 @@ const cveProvider = async () => {
       if ($(element).attr('data-testid').includes('vuln-json-feed-row-zip')) {
         var td = $(element).find('td')[0];
         var anchor = $(td).find('a')[0];
-        // console.log($(anchor).attr('href'));
         var link = $(anchor).attr('href');
+
         linksArray.push(link);
       }
     });

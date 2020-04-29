@@ -12,7 +12,7 @@ router.post('/login', userController.loginUser);
 //probably won't use
 router.get('/getLatestCves', cveController.getLatestCves);
 
-router.get('/getAllCves/:page', cveController.getAllCves);
+router.get('/getCves/:page', cveController.getAllCves);
 router.get('/getNoOfPages', cveController.getNoOfPages);
 router.get('/getByKeywords/', cveController.getByKeyword);
 

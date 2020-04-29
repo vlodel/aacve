@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/authConfig');
-const model = require('../sequelize');
-const User = model.User;
+
+//TODO: make the verifyToken module functional as the token never gets verified
 
 const verifyToken = (req, res) => {
   let token = req.headers['x-access-token'];

@@ -7,12 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-// app.use((req, res) => {
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'x-access-token, Origin, Content-Type, Accept'
-//   );
-// });
+
 app.use('/api', router);
 
 app.listen(8080, () => {
