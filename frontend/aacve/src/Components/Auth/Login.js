@@ -69,7 +69,7 @@ function Login(props) {
   };
 
   if (isLoggedIn) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (

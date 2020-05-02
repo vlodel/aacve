@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import Login from './Components/Auth/Login';
-import Home from './Components/Home';
+import Dashboard from './Components/Dashboard';
 import Register from './Components/Auth/Register';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
@@ -34,10 +34,10 @@ function App() {
     >
       <Router>
         <div>
-          <Redirect to="/home" />
+          <Redirect to="/dashboard" />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
-          <PrivateRoute path="/home" component={Home} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
         </div>
       </Router>
     </AuthContext.Provider>

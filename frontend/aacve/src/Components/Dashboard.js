@@ -8,18 +8,16 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom';
+import SearchedList from './SearchedList';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -91,9 +89,9 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles();
   const history = useHistory();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -101,6 +99,8 @@ function Home() {
   const [noOfPages, setNoOfPages] = useState(1);
   const [pageNo, setPageNo] = useState(1);
   const [currentCves, setCurrentCves] = useState([]);
+  const [searchKeywords, setSearchKeywords] = useState('');
+  const [isSearchDone, setIsSearchDone] = useState(false);
 
   useEffect(() => {
     axios({
@@ -131,17 +131,58 @@ function Home() {
       method: 'GET',
       url: `${process.env.REACT_APP_API_URL}/getCves/${page}`,
     });
-    history.push(`/home/${page}`);
+    history.push(`/dashboard/${page}`);
     setCurrentCves(result.data);
   };
 
   const displayCurrentCves = () => {
-    return currentCves.map((cve) => (
-      <ListItem key={cve.id} divider="true">
-        <ListItemText primary={cve.id}></ListItemText>
-      </ListItem>
-    ));
+    return (
+      <List className={classes.list}>
+        {currentCves.map((cve) => (
+          <ListItem key={cve.id}>
+            <ListItemText primary={cve.id}></ListItemText>
+            <ListItemText
+              primary={cve.description.description_data[0].value}
+            ></ListItemText>
+          </ListItem>
+        ))}
+        <Pagination
+          count={noOfPages}
+          color="primary"
+          onChange={handlePageChange}
+        />
+      </List>
+    );
+
+    // return currentCves.map((cve) => (
+    //   <ListItem key={cve.id}>
+    //     <ListItemText primary={cve.id}></ListItemText>
+    //     <ListItemText
+    //       primary={cve.description.description_data[0].value}
+    //     ></ListItemText>
+    //   </ListItem>
+    // ));
   };
+
+  const keyPress = (event) => {
+    if (event.key == 'Enter') {
+      if (searchKeywords !== '') {
+        setIsSearchDone(true);
+        axios({
+          method: 'GET',
+          url: `${process.env.REACT_APP_API_URL}/getByKeywords`,
+          params: {
+            keywords: searchKeywords,
+          },
+        }).then((result) => {
+          return <SearchedList resultCves={result.data} />;
+        });
+      } else {
+        alert('Search keyword cannot be empty!');
+      }
+    }
+  };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -225,6 +266,14 @@ function Home() {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              name="searchKeywords"
+              value={searchKeywords}
+              onChange={(event) => {
+                setSearchKeywords(event.target.value);
+              }}
+              onKeyPress={(event) => {
+                keyPress(event);
+              }}
             />
           </div>
           <div className={classes.grow} />
@@ -253,14 +302,7 @@ function Home() {
           </div>
         </Toolbar>
       </AppBar>
-      <List className={classes.list}>
-        {displayCurrentCves()}
-        <Pagination
-          count={noOfPages}
-          color="primary"
-          onChange={handlePageChange}
-        />
-      </List>
+      {displayCurrentCves()}
       {renderMobileMenu}
       {renderMenu}
     </div>

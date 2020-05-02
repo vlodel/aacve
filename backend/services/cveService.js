@@ -40,7 +40,7 @@ const cve = {
         });
       }
 
-      const result = await Cve.find({ $and: query });
+      const result = await Cve.find({ $and: query }).sort('-publishedDate');
       return result;
     } catch (err) {
       console.log(err);
