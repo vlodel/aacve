@@ -14,10 +14,18 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Collapse,
+  Divider,
+} from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom';
 import SearchedList from './SearchedList';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -101,6 +109,7 @@ function Home() {
   const [currentCves, setCurrentCves] = useState([]);
   const [searchKeywords, setSearchKeywords] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
+  const [searchedCves, setSearchedCves] = useState([]);
 
   useEffect(() => {
     axios({
@@ -135,38 +144,65 @@ function Home() {
     setCurrentCves(result.data);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const handleCveClick = (id) => {
+    setIsOpen({
+      ...isOpen,
+      [id]: !isOpen[id],
+    });
+  };
+
   const displayCurrentCves = () => {
     return (
       <List className={classes.list}>
         {currentCves.map((cve) => (
-          <ListItem key={cve.id}>
-            <ListItemText primary={cve.id}></ListItemText>
-            <ListItemText
-              primary={cve.description.description_data[0].value}
-            ></ListItemText>
-          </ListItem>
+          <div>
+            <ListItem
+              key={cve.id}
+              button
+              onClick={() => {
+                handleCveClick(cve.id);
+              }}
+            >
+              <ListItemText
+                primary={cve.id}
+                style={{ display: 'flex', justifyContent: 'center' }}
+              ></ListItemText>
+              {isOpen[cve.id] ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={isOpen[cve.id]} timeout="auto" unmountOnExit>
+              <ListItem>
+                <ListItemText
+                  primary={cve.description.description_data[0].value}
+                ></ListItemText>
+              </ListItem>
+            </Collapse>
+            <Divider />
+          </div>
         ))}
         <Pagination
           count={noOfPages}
           color="primary"
           onChange={handlePageChange}
+          style={{ display: 'flex', justifyContent: 'center' }}
         />
       </List>
     );
+  };
 
-    // return currentCves.map((cve) => (
-    //   <ListItem key={cve.id}>
-    //     <ListItemText primary={cve.id}></ListItemText>
-    //     <ListItemText
-    //       primary={cve.description.description_data[0].value}
-    //     ></ListItemText>
-    //   </ListItem>
-    // ));
+  const displaySearchedCves = () => {
+    return (
+      <SearchedList
+        searchedCves={searchedCves}
+        searchKeywords={searchKeywords}
+        setIsSearchDone={setIsSearchDone}
+      ></SearchedList>
+    );
   };
 
   const keyPress = (event) => {
     if (event.key == 'Enter') {
-      if (searchKeywords !== '') {
+      if (searchKeywords.length > 2) {
         setIsSearchDone(true);
         axios({
           method: 'GET',
@@ -175,10 +211,12 @@ function Home() {
             keywords: searchKeywords,
           },
         }).then((result) => {
-          return <SearchedList resultCves={result.data} />;
+          // return <SearchedList resultCves={result.data} />;
+          //setCurrentCves(result.data);
+          setSearchedCves(result.data);
         });
       } else {
-        alert('Search keyword cannot be empty!');
+        alert('Search keywords length must be greater than 2');
       }
     }
   };
@@ -302,7 +340,7 @@ function Home() {
           </div>
         </Toolbar>
       </AppBar>
-      {displayCurrentCves()}
+      {isSearchDone ? displaySearchedCves() : displayCurrentCves()}
       {renderMobileMenu}
       {renderMenu}
     </div>
