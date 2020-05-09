@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Collapse,
-  Divider,
-} from '@material-ui/core';
+import { IconButton, List } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import Cve from './Cve';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -84,14 +75,6 @@ function SearchedList(props) {
   const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleCveClick = (id) => {
-    setIsOpen({
-      ...isOpen,
-      [id]: !isOpen[id],
-    });
-  };
-
-  const [currentCves, setCurrentCves] = useState([]);
 
   return (
     <div className={classes.grow}>
@@ -106,29 +89,7 @@ function SearchedList(props) {
       </IconButton>
       <List className={classes.list}>
         {props.searchedCves.map((cve) => (
-          <div>
-            <ListItem
-              key={cve.id}
-              button
-              onClick={() => {
-                handleCveClick(cve.id);
-              }}
-            >
-              <ListItemText
-                primary={cve.id}
-                style={{ display: 'flex', justifyContent: 'center' }}
-              ></ListItemText>
-              {isOpen[cve.id] ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={isOpen[cve.id]} timeout="auto" unmountOnExit>
-              <ListItem>
-                <ListItemText
-                  primary={cve.description.description_data[0].value}
-                ></ListItemText>
-              </ListItem>
-            </Collapse>
-            <Divider />
-          </div>
+          <Cve cve={cve} setIsOpen={setIsOpen} isOpen={isOpen}></Cve>
         ))}
       </List>
     </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useAuth } from '../context/auth';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,25 +13,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Collapse,
-  Divider,
-  Button,
-  Modal,
-  Fade,
-  Backdrop,
-  Link,
-  Grid,
-  Box,
-} from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom';
 import SearchedList from './SearchedList';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import DefaultList from './DefaultList';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -99,18 +82,6 @@ const useStyles = makeStyles((theme) => ({
   list: {
     margin: theme.spacing(3),
   },
-  severityLow: {
-    backgroundColor: 'yellow',
-  },
-  severityMedium: {
-    backgroundColor: 'orange',
-  },
-  severityHigh: {
-    backgroundColor: 'red',
-  },
-  severityCritical: {
-    backgroundColor: 'purple',
-  },
 }));
 
 function Home() {
@@ -123,191 +94,17 @@ function Home() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const { setAuthTokens } = useAuth();
-  const [noOfPages, setNoOfPages] = useState(1);
-  const [pageNo, setPageNo] = useState(1);
-  const [currentCves, setCurrentCves] = useState([]);
+
   const [searchKeywords, setSearchKeywords] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
   const [searchedCves, setSearchedCves] = useState([]);
-
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getNoOfPages`,
-    }).then((result) => {
-      if (result.status === 200) {
-        setNoOfPages(result.data);
-      }
-    });
-
-    axios({
-      method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getCves/1`,
-    }).then((result) => {
-      setCurrentCves(result.data);
-    });
-  }, []);
 
   const handleLogOut = () => {
     setAuthTokens(null);
   };
 
-  const handlePageChange = async (event, page) => {
-    setPageNo(page);
-
-    const result = await axios({
-      method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getCves/${page}`,
-    });
-    history.push(`/dashboard/${page}`);
-    setCurrentCves(result.data);
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const handleCveClick = (id) => {
-    setIsOpen({
-      ...isOpen,
-      [id]: !isOpen[id],
-    });
-  };
-
   const displayCurrentCves = () => {
-    return (
-      <List className={classes.list}>
-        {currentCves.map((cve) => (
-          <div>
-            <ListItem
-              key={cve.id}
-              button
-              onClick={() => {
-                handleCveClick(cve.id);
-              }}
-            >
-              <ListItemText
-                primary={cve.id}
-                style={{ display: 'flex', justifyContent: 'center' }}
-              ></ListItemText>
-              {isOpen[cve.id] ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={isOpen[cve.id]} timeout="auto" unmountOnExit>
-              <ListItem>
-                <ListItemText>
-                  <Typography variant="body1" color="textSecondary">
-                    {'Published: ' +
-                      new Date(cve.publishedDate).toLocaleString('ro-RO')}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {'Last modified: ' +
-                      new Date(cve.lastModifiedDate).toLocaleString('ro-RO')}
-                  </Typography>
-                  <Typography variant="h5">Description</Typography>
-                  <Typography variant="body1">
-                    {cve.description.description_data[0].value}
-                  </Typography>
-                  <Divider />
-
-                  <Typography variant="h5">References</Typography>
-                  {cve.references.reference_data.map((reference) => (
-                    <div>
-                      <Link href={reference.url} target="_blank">
-                        {reference.url}
-                      </Link>
-                      <br></br>
-                    </div>
-                  ))}
-                  <Divider />
-
-                  <Typography variant="h5">Impact</Typography>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Typography variant="h6" align="center">
-                        CVSS Version 3.x
-                      </Typography>
-                      <div>
-                        {cve.impact && cve.impact.baseMetricV3 ? (
-                          <>
-                            <Typography
-                              variant="body1"
-                              align="center"
-                              className={
-                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
-                                  'LOW' &&
-                                  classes.severityLow) ||
-                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
-                                  'MEDIUM' &&
-                                  classes.severityMedium) ||
-                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
-                                  'HIGH' &&
-                                  classes.severityHigh) ||
-                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
-                                  'CRITICAL' &&
-                                  classes.severityCritical)
-                              }
-                            >
-                              {`Base score: 
-                                ${cve.impact.baseMetricV3.cvssV3.baseScore} ${cve.impact.baseMetricV3.cvssV3.baseSeverity}`}
-                            </Typography>
-                            <Typography variant="body1" align="center">
-                              {'Vector: ' +
-                                cve.impact.baseMetricV2.cvssV2.vectorString}
-                            </Typography>
-                          </>
-                        ) : (
-                          <Typography variant="body1" align="center">
-                            N/A
-                          </Typography>
-                        )}
-                      </div>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Typography variant="h6" align="center">
-                        CVSS Version 2.0
-                      </Typography>
-                      <div>
-                        {cve.impact && cve.impact.baseMetricV2 ? (
-                          <>
-                            <Typography
-                              variant="body1"
-                              align="center"
-                              className={
-                                (cve.impact.baseMetricV2.severity == 'LOW' &&
-                                  classes.severityLow) ||
-                                (cve.impact.baseMetricV2.severity == 'MEDIUM' &&
-                                  classes.severityMedium) ||
-                                (cve.impact.baseMetricV2.severity == 'HIGH' &&
-                                  classes.severityHigh)
-                              }
-                            >
-                              {`Base score: 
-                                ${cve.impact.baseMetricV2.cvssV2.baseScore} ${cve.impact.baseMetricV2.severity}`}
-                            </Typography>
-                            <Typography variant="body1" align="center">
-                              {'Vector: ' +
-                                cve.impact.baseMetricV2.cvssV2.vectorString}
-                            </Typography>
-                          </>
-                        ) : (
-                          <Typography variant="body1" align="center">
-                            N/A
-                          </Typography>
-                        )}
-                      </div>
-                    </Grid>
-                  </Grid>
-                </ListItemText>
-              </ListItem>
-            </Collapse>
-            <Divider />
-          </div>
-        ))}
-        <Pagination
-          count={noOfPages}
-          color="primary"
-          onChange={handlePageChange}
-          style={{ display: 'flex', justifyContent: 'center' }}
-        />
-      </List>
-    );
+    return <DefaultList></DefaultList>;
   };
 
   const displaySearchedCves = () => {
@@ -331,8 +128,6 @@ function Home() {
             keywords: searchKeywords,
           },
         }).then((result) => {
-          // return <SearchedList resultCves={result.data} />;
-          //setCurrentCves(result.data);
           setSearchedCves(result.data);
         });
       } else {
