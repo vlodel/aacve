@@ -20,6 +20,13 @@ import {
   ListItemText,
   Collapse,
   Divider,
+  Button,
+  Modal,
+  Fade,
+  Backdrop,
+  Link,
+  Grid,
+  Box,
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from 'react-router-dom';
@@ -91,6 +98,18 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     margin: theme.spacing(3),
+  },
+  severityLow: {
+    backgroundColor: 'yellow',
+  },
+  severityMedium: {
+    backgroundColor: 'orange',
+  },
+  severityHigh: {
+    backgroundColor: 'red',
+  },
+  severityCritical: {
+    backgroundColor: 'purple',
   },
 }));
 
@@ -172,9 +191,110 @@ function Home() {
             </ListItem>
             <Collapse in={isOpen[cve.id]} timeout="auto" unmountOnExit>
               <ListItem>
-                <ListItemText
-                  primary={cve.description.description_data[0].value}
-                ></ListItemText>
+                <ListItemText>
+                  <Typography variant="body1" color="textSecondary">
+                    {'Published: ' +
+                      new Date(cve.publishedDate).toLocaleString('ro-RO')}
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary">
+                    {'Last modified: ' +
+                      new Date(cve.lastModifiedDate).toLocaleString('ro-RO')}
+                  </Typography>
+                  <Typography variant="h5">Description</Typography>
+                  <Typography variant="body1">
+                    {cve.description.description_data[0].value}
+                  </Typography>
+                  <Divider />
+
+                  <Typography variant="h5">References</Typography>
+                  {cve.references.reference_data.map((reference) => (
+                    <div>
+                      <Link href={reference.url} target="_blank">
+                        {reference.url}
+                      </Link>
+                      <br></br>
+                    </div>
+                  ))}
+                  <Divider />
+
+                  <Typography variant="h5">Impact</Typography>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <Typography variant="h6" align="center">
+                        CVSS Version 3.x
+                      </Typography>
+                      <div>
+                        {cve.impact && cve.impact.baseMetricV3 ? (
+                          <>
+                            <Typography
+                              variant="body1"
+                              align="center"
+                              className={
+                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
+                                  'LOW' &&
+                                  classes.severityLow) ||
+                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
+                                  'MEDIUM' &&
+                                  classes.severityMedium) ||
+                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
+                                  'HIGH' &&
+                                  classes.severityHigh) ||
+                                (cve.impact.baseMetricV3.cvssV3.baseSeverity ==
+                                  'CRITICAL' &&
+                                  classes.severityCritical)
+                              }
+                            >
+                              {`Base score: 
+                                ${cve.impact.baseMetricV3.cvssV3.baseScore} ${cve.impact.baseMetricV3.cvssV3.baseSeverity}`}
+                            </Typography>
+                            <Typography variant="body1" align="center">
+                              {'Vector: ' +
+                                cve.impact.baseMetricV2.cvssV2.vectorString}
+                            </Typography>
+                          </>
+                        ) : (
+                          <Typography variant="body1" align="center">
+                            N/A
+                          </Typography>
+                        )}
+                      </div>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="h6" align="center">
+                        CVSS Version 2.0
+                      </Typography>
+                      <div>
+                        {cve.impact && cve.impact.baseMetricV2 ? (
+                          <>
+                            <Typography
+                              variant="body1"
+                              align="center"
+                              className={
+                                (cve.impact.baseMetricV2.severity == 'LOW' &&
+                                  classes.severityLow) ||
+                                (cve.impact.baseMetricV2.severity == 'MEDIUM' &&
+                                  classes.severityMedium) ||
+                                (cve.impact.baseMetricV2.severity == 'HIGH' &&
+                                  classes.severityHigh)
+                              }
+                            >
+                              {`Base score: 
+                                ${cve.impact.baseMetricV2.cvssV2.baseScore} ${cve.impact.baseMetricV2.severity}`}
+                            </Typography>
+                            <Typography variant="body1" align="center">
+                              {'Vector: ' +
+                                cve.impact.baseMetricV2.cvssV2.vectorString}
+                            </Typography>
+                          </>
+                        ) : (
+                          <Typography variant="body1" align="center">
+                            N/A
+                          </Typography>
+                        )}
+                      </div>
+                    </Grid>
+                  </Grid>
+                </ListItemText>
               </ListItem>
             </Collapse>
             <Divider />

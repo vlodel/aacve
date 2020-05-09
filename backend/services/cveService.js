@@ -30,18 +30,22 @@ const cve = {
   },
   getByKeyword: async (keywords) => {
     try {
-      var query = [];
-      for (let i = 0; i < keywords.length; i++) {
-        query.push({
-          'description.description_data.value': {
-            $regex: keywords[i],
-            $options: 'i',
-          },
-        });
+      if (keywords[0].includes('CVE-')) {
+        const result = await Cve.find({ id: keywords });
+        return result;
+      } else {
+        var query = [];
+        for (let i = 0; i < keywords.length; i++) {
+          query.push({
+            'description.description_data.value': {
+              $regex: keywords[i],
+              $options: 'i',
+            },
+          });
+        }
+        const result = await Cve.find({ $and: query }).sort('-publishedDate');
+        return result;
       }
-
-      const result = await Cve.find({ $and: query }).sort('-publishedDate');
-      return result;
     } catch (err) {
       console.log(err);
     }
