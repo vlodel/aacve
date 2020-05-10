@@ -94,13 +94,15 @@ function Home() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const { setAuthTokens } = useAuth();
+  const { setCurrentUser } = useAuth();
 
   const [searchKeywords, setSearchKeywords] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
   const [searchedCves, setSearchedCves] = useState([]);
 
   const handleLogOut = () => {
-    setAuthTokens(null);
+    setAuthTokens();
+    setCurrentUser();
   };
 
   const displayCurrentCves = () => {

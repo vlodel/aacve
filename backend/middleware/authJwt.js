@@ -1,26 +1,38 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/authConfig');
+const { User } = require('../sequelize');
 
-//TODO: make the verifyToken module functional as the token never gets verified
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader.split(' ')[1];
 
-const verifyToken = (req, res) => {
-  let token = req.headers['x-access-token'];
+  console.log(authHeader);
 
-  if (!token) {
+  if (token) {
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).send({ message: 'Unauthorized' });
+      } else {
+        User.findOne({ where: { email: decoded.email } })
+          .then((result) => {
+            req.user = result;
+            next();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  } else {
     return res.status(403).send({
       message: 'No auth token provided',
     });
   }
 
-  jwt.verify(token, config.secret, (err, decode) => {
-    if (err) {
-      return res.status(401).send({
-        message: 'Unauthorized',
-      });
-    }
+  // const authHeader = req.headers.authorization;
+  // const token = authHeader.split(' ')[1];
 
-    req.email = decode.email;
-  });
+  // console.log(token);
 };
 
 module.exports = { verifyToken };

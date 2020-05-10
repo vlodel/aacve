@@ -76,8 +76,8 @@ function Cve(props) {
             <Divider />
 
             <Typography variant="h5">References</Typography>
-            {props.cve.references.reference_data.map((reference) => (
-              <div>
+            {props.cve.references.reference_data.map((reference, index) => (
+              <div key={index}>
                 <Link href={reference.url} target="_blank">
                   {reference.url}
                 </Link>

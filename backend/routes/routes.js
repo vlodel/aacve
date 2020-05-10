@@ -16,4 +16,8 @@ router.get('/getCves/:page', cveController.getAllCves);
 router.get('/getNoOfPages', cveController.getNoOfPages);
 router.get('/getByKeywords/', cveController.getByKeyword);
 
+router.post('/verifyToken', authJwt.verifyToken, (req, res) => {
+  res.status(201).send({ success: true });
+});
+
 module.exports = router;

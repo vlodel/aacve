@@ -52,7 +52,7 @@ function DefaultList() {
   return (
     <List className={classes.list}>
       {currentCves.map((cve) => (
-        <Cve cve={cve} setIsOpen={setIsOpen} isOpen={isOpen}></Cve>
+        <Cve key={cve.id} cve={cve} setIsOpen={setIsOpen} isOpen={isOpen}></Cve>
       ))}
       <Pagination
         count={noOfPages}

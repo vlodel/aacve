@@ -33,7 +33,7 @@ const loginUser = async (req, res) => {
       bcrypt.compare(inputUser.password, resultUser.password, (err, result) => {
         if (result == true) {
           var token = jwt.sign({ email: inputUser.email }, config.secret, {
-            expiresIn: 86400,
+            expiresIn: 604800,
           });
 
           res.status(200).send({
