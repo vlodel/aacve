@@ -76,14 +76,29 @@ function Cve(props) {
             <Divider />
 
             <Typography variant="h5">References</Typography>
-            {props.cve.references.reference_data.map((reference, index) => (
-              <div key={index}>
-                <Link href={reference.url} target="_blank">
-                  {reference.url}
-                </Link>
-                <br></br>
-              </div>
-            ))}
+            <Grid
+              container
+              className={classes.cvssContainer}
+              alignContent="center"
+              alignItems="center"
+            >
+              <Grid item xs align="left">
+                {props.cve.references.reference_data.map((reference, index) => (
+                  <div key={index}>
+                    <Typography>
+                      <Link
+                        href={reference.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        rel="noopener"
+                      >
+                        {reference.url}
+                      </Link>
+                    </Typography>
+                  </div>
+                ))}
+              </Grid>
+            </Grid>
             <Divider />
 
             <Typography variant="h5">Impact</Typography>
@@ -93,7 +108,7 @@ function Cve(props) {
               alignContent="center"
               alignItems="center"
             >
-              <Grid item xs={6} align="center">
+              <Grid item xs={12} align="center">
                 <Typography variant="h6" align="center">
                   CVSS Version 3.x
                 </Typography>
@@ -127,6 +142,7 @@ function Cve(props) {
                         display="inline"
                         variant="body1"
                         align="center"
+                        noWrap
                       >
                         {'Vector: ' +
                           props.cve.impact.baseMetricV2.cvssV2.vectorString}
@@ -139,7 +155,7 @@ function Cve(props) {
                   )}
                 </div>
               </Grid>
-              <Grid item xs={6} align="center">
+              <Grid item xs={12} align="center">
                 <Typography variant="h6" align="center">
                   CVSS Version 2.0
                 </Typography>
@@ -167,6 +183,7 @@ function Cve(props) {
                         display="inline"
                         variant="body1"
                         align="center"
+                        noWrap
                       >
                         {'Vector: ' +
                           props.cve.impact.baseMetricV2.cvssV2.vectorString}

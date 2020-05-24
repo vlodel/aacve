@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { IconButton, List } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import Cve from './Cve';
+import { IconButton, Typography } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -71,10 +70,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchedList(props) {
+//Modul: Analiza pe search | ex: caut facebook, google, instagram si primesc statistici despre fiecare dintr-un anumit an, etc.
+function Statistics(props) {
   const classes = useStyles();
-
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={classes.grow}>
@@ -87,18 +85,9 @@ function SearchedList(props) {
       >
         <ArrowBackIcon />
       </IconButton>
-      <List className={classes.list}>
-        {props.searchedCves.map((cve) => (
-          <Cve
-            key={cve.id}
-            cve={cve}
-            setIsOpen={setIsOpen}
-            isOpen={isOpen}
-          ></Cve>
-        ))}
-      </List>
+      <Typography variant="h5">Statistics</Typography>
     </div>
   );
 }
 
-export default SearchedList;
+export default Statistics;

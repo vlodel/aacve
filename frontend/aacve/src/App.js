@@ -6,21 +6,10 @@ import Register from './Components/Auth/Register';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 import axios from 'axios';
+import Statistics from './Components/Statistics';
 
 function App() {
   useEffect(() => {
-    // axios.interceptors.response.use(
-    //   (res) => {
-    //     Promise.resolve(res.data);
-    //   },
-    //   (error) => {
-    //     localStorage.removeItem('tokens');
-    //     localStorage.removeItem('user');
-    //     setAuthTokens(null);
-    //     setCurrentUser(null);
-    //   }
-    // );
-
     axios({
       method: 'POST',
       url: `${process.env.REACT_APP_API_URL}/verifyToken`,
@@ -79,6 +68,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/statistics" component={Statistics} />
         </div>
       </Router>
     </AuthContext.Provider>
