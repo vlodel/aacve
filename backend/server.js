@@ -15,5 +15,4 @@ app.listen(8080, () => {
 });
 
 const cveProvider = require('./utils/cveProvider');
-
 //cveProvider.getCveFiles();

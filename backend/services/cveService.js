@@ -1,4 +1,4 @@
-const Cve = require('../mongoose');
+const { Cve } = require('../mongoose');
 
 const cve = {
   getLatest10: async () => {
@@ -46,6 +46,12 @@ const cve = {
         const result = await Cve.find({ $and: query }).sort('-publishedDate');
         return result;
       }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  analysisSearch: async (keywords) => {
+    try {
     } catch (err) {
       console.log(err);
     }

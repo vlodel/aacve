@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
       user.password = hash;
       const result = await userService.createUser(user);
 
-      if (result.exists == true) {
+      if (result.exists === true) {
         res.status(400).send({ message: 'User already exists' });
       } else {
         res.status(201).send({ message: 'User added succsefully' });

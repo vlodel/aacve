@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/authConfig');
-const { User } = require('../sequelize');
+const { User } = require('../mongoose');
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];

@@ -1,21 +1,19 @@
-const { User } = require('../sequelize');
+const { User } = require('../mongoose');
 
 const user = {
   createUser: async (newUser) => {
     try {
-      const existingUser = await User.findOne({
-        where: {
-          email: newUser.email,
-        },
-      });
+      const existingUser = await User.findOne({ email: newUser.email });
 
       if (!existingUser) {
-        return await User.create({
+        const createdUser = await User.create({
           firstName: newUser.firstName,
           lastName: newUser.lastName,
           email: newUser.email,
           password: newUser.password,
         });
+
+        return createdUser;
       } else {
         existingUser.exists = true;
         return existingUser;
@@ -28,9 +26,7 @@ const user = {
   loginUser: async (user) => {
     try {
       const result = await User.findOne({
-        where: {
-          email: user.email,
-        },
+        email: user.email,
       });
 
       return result;

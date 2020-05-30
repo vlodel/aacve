@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const cveSchema = require('./models/cve');
+const userSchema = require('./models/user');
 
 const server = '127.0.0.1:27017';
 const database = 'aacve';
@@ -20,5 +21,9 @@ mongoose
   });
 
 const Cve = mongoose.model('cve', cveSchema);
+const User = mongoose.model('user', userSchema);
 
-module.exports = Cve;
+module.exports = {
+  Cve,
+  User,
+};

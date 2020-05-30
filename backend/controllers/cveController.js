@@ -34,8 +34,23 @@ const getByKeyword = async (req, res) => {
   if (result) {
     res.status(200).send(result);
   } else {
-    res.status(404).send({ message: 'Cves not found' });
+    res.status(404).send({ message: 'CVEs not found' });
   }
 };
 
-module.exports = { getLatestCves, getAllCves, getNoOfPages, getByKeyword };
+const analysisSearch = async (req, res) => {
+  const result = await cveService.analysisSearch(req.body);
+  if (result) {
+    res.status(200).send(result);
+  } else {
+    res.status(404).send({ message: 'CVEs not found' });
+  }
+};
+
+module.exports = {
+  getLatestCves,
+  getAllCves,
+  getNoOfPages,
+  getByKeyword,
+  analysisSearch,
+};
