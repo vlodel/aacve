@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import {
-  IconButton,
-  Typography,
-  TextField,
-  Grid,
-  InputBase,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { IconButton, TextField, Grid } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
@@ -16,6 +10,10 @@ import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns';
 import enLocale from 'date-fns/locale/en-GB';
 import { LocalizationProvider, DatePicker } from '@material-ui/pickers';
 import axios from 'axios';
+import { ResponsiveBar } from '@nivo/bar';
+import ResponsiveBarChartImpactV2 from './Charts/ResponsiveBarChartImpactV2';
+import ResponsivePieChart from './Charts/ResponsivePieChart';
+import ResponsiveBarChartImpactV3 from './Charts/ResponsiveBarChartImpactV3';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,46 +25,72 @@ const useStyles = makeStyles((theme) => ({
   picker: {
     margin: theme.spacing(1, 1, 1, 1),
   },
+  barChart: {
+    height: '50vh',
+    width: '80%',
+  },
 }));
 
-//Modul: Analiza pe search | ex: caut facebook, google, instagram si primesc statistici despre fiecare dintr-un anumit an, etc.
 function Statistics(props) {
   const classes = useStyles();
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [inputs, setInputs] = useState(['']);
+  const [showCharts, setShowCharts] = useState(false);
+  const [chartsData, setChartsData] = useState();
 
   const handleChangeInput = (index, event) => {
     const values = [...inputs];
     const filter = event.target.value;
     values[index] = filter;
     setInputs(values);
-    console.log(inputs);
   };
 
   const handleRemoveInput = (index) => {
     const values = [...inputs];
     if (values.length > 1) {
       values.splice(index, 1);
+      setInputs(values);
+      setShowCharts(false);
     }
-    setInputs(values);
   };
 
   const handleAddInput = () => {
     const values = [...inputs];
     values.push('');
     setInputs(values);
+    setShowCharts(false);
   };
 
-  const handleClickAnalyse = () => {
+  const handleClickAnalyse = async () => {
+    setShowCharts(false);
     const result = await axios({
-      method: 'GET',
+      method: 'POST',
       url: `${process.env.REACT_APP_API_URL}/analysisSearch`,
       data: {
-        filters:inputs
+        startDate: startDate,
+        endDate: endDate,
+        filters: inputs,
       },
     });
+
+    setChartsData(result.data);
+    setShowCharts(true);
+  };
+
+  const displayCharts = () => {
+    return (
+      <div>
+        <ResponsivePieChart data={chartsData}></ResponsivePieChart>
+        <ResponsiveBarChartImpactV3
+          data={chartsData}
+        ></ResponsiveBarChartImpactV3>
+        <ResponsiveBarChartImpactV2
+          data={chartsData}
+        ></ResponsiveBarChartImpactV2>
+      </div>
+    );
   };
 
   return (
@@ -80,7 +104,6 @@ function Statistics(props) {
       >
         <ArrowBackIcon />
       </IconButton>
-      {/* <Typography variant="h5">Statistics</Typography> */}
       <div className={classes.paper}>
         <Grid
           container
@@ -151,9 +174,13 @@ function Statistics(props) {
           color="primary"
           size="large"
           startIcon={<ShowChartIcon />}
+          onClick={() => {
+            handleClickAnalyse();
+          }}
         >
           Analyse
         </Button>
+        {showCharts && displayCharts()}
       </div>
     </div>
   );

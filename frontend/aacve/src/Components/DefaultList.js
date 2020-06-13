@@ -9,6 +9,7 @@ import Cve from './Cve';
 const useStyles = makeStyles((theme) => ({
   list: {
     margin: theme.spacing(3),
+    height: '90vh',
   },
 }));
 
@@ -58,7 +59,8 @@ function DefaultList() {
         count={noOfPages}
         color="primary"
         onChange={handlePageChange}
-        style={{ display: 'flex', justifyContent: 'center' }}
+        style={{ display: 'flex', justifyContent: 'center', width: '100%' }}
+        size="small"
       />
     </List>
   );

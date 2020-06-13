@@ -19,7 +19,6 @@ function App() {
       },
     })
       .then((result) => {
-        console.log(result);
         if (result.status === 401) {
           localStorage.removeItem('tokens');
           localStorage.removeItem('user');

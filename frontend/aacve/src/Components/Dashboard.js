@@ -220,7 +220,14 @@ function Dashboard(props) {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            noWrap
+            onClick={() => {
+              setRenderedComponent('defaultList');
+            }}
+          >
             AACVE
           </Typography>
           <div className={classes.search}>

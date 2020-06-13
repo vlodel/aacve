@@ -15,7 +15,7 @@ router.get('/getLatestCves', cveController.getLatestCves);
 router.get('/getCves/:page', cveController.getAllCves);
 router.get('/getNoOfPages', cveController.getNoOfPages);
 router.get('/getByKeywords/', cveController.getByKeyword);
-router.get('/analysisSearch', cveController.analysisSearch);
+router.post('/analysisSearch', cveController.analysisSearch);
 
 router.post('/verifyToken', authJwt.verifyToken, (req, res) => {
   res.status(201).send({ success: true });

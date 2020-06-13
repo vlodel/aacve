@@ -50,8 +50,79 @@ const cve = {
       console.log(err);
     }
   },
-  analysisSearch: async (keywords) => {
+  analysisSearch: async (body) => {
     try {
+      var result = [];
+
+      for (let i = 0; i < body.filters.length; i++) {
+        const countFilterResult = await Cve.find({
+          'description.description_data.value': {
+            $regex: body.filters[i],
+            $options: 'i',
+          },
+          publishedDate: { $gte: body.startDate, $lte: body.endDate },
+        }).countDocuments();
+
+        const avgImpactScoreV3 = await Cve.aggregate([
+          {
+            $match: {
+              $and: [
+                {
+                  'description.description_data.value': {
+                    $regex: body.filters[i],
+                    $options: 'i',
+                  },
+                },
+                {
+                  publishedDate: {
+                    $gte: new Date(body.startDate),
+                    $lte: new Date(body.endDate),
+                  },
+                },
+              ],
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              avg: { $avg: '$impact.baseMetricV3.impactScore' },
+            },
+          },
+        ]);
+
+        const avgImpactScoreV2 = await Cve.aggregate([
+          {
+            $match: {
+              'description.description_data.value': {
+                $regex: body.filters[i],
+                $options: 'i',
+              },
+              publishedDate: {
+                $gte: new Date(body.startDate),
+                $lte: new Date(body.endDate),
+              },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              avg: { $avg: '$impact.baseMetricV2.impactScore' },
+            },
+          },
+        ]);
+
+        var resultJson = {
+          filter: body.filters[i].toUpperCase(),
+          noOfCVEs: countFilterResult,
+          avgImpactScoreV2: parseFloat(avgImpactScoreV2[0].avg.toFixed(2)),
+          avgImpactScoreV3: parseFloat(avgImpactScoreV3[0].avg.toFixed(2)),
+        };
+        result.push(resultJson);
+      }
+
+      console.log(result);
+
+      return result;
     } catch (err) {
       console.log(err);
     }
