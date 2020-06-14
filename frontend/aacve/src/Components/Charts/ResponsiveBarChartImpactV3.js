@@ -21,7 +21,7 @@ function ResponsiveBarChartImpactV3(props) {
         keys={['avgImpactScoreV3']}
         margin={{ top: 50, right: 10, bottom: 50, left: 60 }}
         padding={0.3}
-        colors={{ scheme: 'purpleRed_green' }}
+        colors={{ scheme: 'nivo' }}
         borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
         axisTop={null}
         axisRight={null}

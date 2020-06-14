@@ -101,9 +101,6 @@ function Dashboard(props) {
   const [searchKeywords, setSearchKeywords] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
   const [searchedCves, setSearchedCves] = useState([]);
-  const [isStatisticsButtonPressed, setIsStatisticsButtonPressed] = useState(
-    false
-  );
 
   const [renderedComponent, setRenderedComponent] = useState('defaultList');
 
@@ -212,14 +209,6 @@ function Dashboard(props) {
     <div className={classes.grow}>
       <AppBar position="sticky">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography
             className={classes.title}
             variant="h6"

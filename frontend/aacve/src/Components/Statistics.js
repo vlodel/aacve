@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 function Statistics(props) {
   const classes = useStyles();
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(
+    new Date(new Date().setFullYear(new Date().getFullYear() - 1))
+  );
   const [endDate, setEndDate] = useState(new Date());
   const [inputs, setInputs] = useState(['']);
   const [showCharts, setShowCharts] = useState(false);

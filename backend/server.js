@@ -14,5 +14,5 @@ app.listen(8080, () => {
   console.log('Server started on port 8080...');
 });
 
-const cveProvider = require('./utils/cveProvider');
-//cveProvider.getCveFiles();
+// const cveProvider = require('./utils/cveProvider');
+// cveProvider.getCveFiles();

@@ -2,10 +2,11 @@
 
 const fs = require('fs');
 const mongoose = require('mongoose');
-const cveModel = require('../models/cve');
+const cveSchema = require('../models/cve');
 
 const server = '127.0.0.1:27017';
 const database = 'aacve';
+const cveModel = mongoose.model('cve', cveSchema);
 
 mongoose
   .connect(`mongodb://${server}/${database}`, {

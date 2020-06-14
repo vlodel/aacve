@@ -30,7 +30,7 @@ const getNoOfPages = async (req, res) => {
 };
 
 const getByKeyword = async (req, res) => {
-  const result = await cveService.getByKeyword(req.query.keywords.split('+'));
+  const result = await cveService.getByKeyword(req.query.keywords.split(' '));
   if (result) {
     res.status(200).send(result);
   } else {
