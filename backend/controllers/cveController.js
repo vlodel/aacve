@@ -11,7 +11,7 @@ const getLatestCves = async (req, res) => {
 
 const getAllCves = async (req, res) => {
   const pageNo = req.params.page;
-  const resultsPerPage = 10;
+  const resultsPerPage = Math.round(req.params.windowHeight / 60);
   const result = await cveService.getAll(pageNo, resultsPerPage);
   if (result) {
     res.status(200).send(result);
@@ -21,7 +21,8 @@ const getAllCves = async (req, res) => {
 };
 
 const getNoOfPages = async (req, res) => {
-  const result = await cveService.getNoOfPages();
+  const resultsPerPage = Math.round(req.params.windowHeight / 60);
+  const result = await cveService.getNoOfPages(resultsPerPage);
   if (result) {
     res.status(200).send(result.toString());
   } else {

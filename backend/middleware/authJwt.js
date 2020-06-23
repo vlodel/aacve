@@ -28,11 +28,6 @@ const verifyToken = (req, res, next) => {
       message: 'No auth token provided',
     });
   }
-
-  // const authHeader = req.headers.authorization;
-  // const token = authHeader.split(' ')[1];
-
-  // console.log(token);
 };
 
 module.exports = { verifyToken };

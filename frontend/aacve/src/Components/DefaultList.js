@@ -17,7 +17,7 @@ function DefaultList() {
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getNoOfPages`,
+      url: `${process.env.REACT_APP_API_URL}/getNoOfPages/${window.innerHeight}`,
     }).then((result) => {
       if (result.status === 200) {
         setNoOfPages(result.data);
@@ -26,7 +26,7 @@ function DefaultList() {
 
     axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getCves/1`,
+      url: `${process.env.REACT_APP_API_URL}/getCves/1/${window.innerHeight}`,
     }).then((result) => {
       setCurrentCves(result.data);
     });
@@ -44,7 +44,7 @@ function DefaultList() {
 
     const result = await axios({
       method: 'GET',
-      url: `${process.env.REACT_APP_API_URL}/getCves/${page}`,
+      url: `${process.env.REACT_APP_API_URL}/getCves/${page}/${window.innerHeight}`,
     });
     history.push(`/dashboard/${page}`);
     setCurrentCves(result.data);

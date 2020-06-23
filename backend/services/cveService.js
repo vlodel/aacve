@@ -1,5 +1,4 @@
 const { Cve } = require('../mongoose');
-const { query } = require('express');
 
 const cve = {
   getLatest10: async () => {
@@ -21,10 +20,10 @@ const cve = {
       throw new Error(err);
     }
   },
-  getNoOfPages: async () => {
+  getNoOfPages: async (resultsPerPage) => {
     try {
       const result = await Cve.countDocuments();
-      return Math.floor(result / 10 + 1);
+      return Math.floor(result / resultsPerPage + 1);
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +84,7 @@ const cve = {
           {
             $group: {
               _id: null,
-              avg: { $avg: '$impact.baseMetricV3.impactScore' },
+              avg: { $avg: '$impact.baseMetricV3.cvssV3.baseScore' },
             },
           },
         ]);
@@ -103,7 +102,7 @@ const cve = {
           {
             $group: {
               _id: null,
-              avg: { $avg: '$impact.baseMetricV2.impactScore' },
+              avg: { $avg: '$impact.baseMetricV2.cvssV2.baseScore' },
             },
           },
         ]);
@@ -121,93 +120,6 @@ const cve = {
     } catch (err) {
       console.log(err);
     }
-
-    // try {
-    //   var result = [];
-    //   console.log(body.filters);
-    //   for (let i = 0; i < body.filters.length; i++) {
-    //     var filterRegxp = '';
-    //     const filters = body.filters[i].split(' ');
-
-    //     for (let i = 0; i < filters.length; i++) {
-    //       filterRegxp += '(?=.*?\\b' + filters[i] + ')';
-    //     }
-
-    //     filterRegxp += '^.*$';
-
-    //     console.log(filterRegxp);
-
-    //     const countCurrentFilterResult = await Cve.find({
-    //       'description.description_data.value': {
-    //         $regex: filterRegxp,
-    //         $options: 'i',
-    //       },
-    //       publishedDate: { $gte: body.startDate, $lte: body.endDate },
-    //     }).countDocuments();
-
-    //     console.log(countCurrentFilterResult);
-
-    //     const avgV3 = await Cve.aggregate([
-    //       {
-    //         $match: {
-    //           $and: [
-    //             {
-    //               'description.description_data.value': {
-    //                 $regex: filterRegxp,
-    //                 $options: 'i',
-    //               },
-    //             },
-    //             {
-    //               publishedDate: {
-    //                 $gte: new Date(body.startDate),
-    //                 $lte: new Date(body.endDate),
-    //               },
-    //             },
-    //           ],
-    //         },
-    //       },
-    //       {
-    //         $group: {
-    //           _id: null,
-    //           avg: { $avg: '$impact.baseMetricV3.impactScore' },
-    //         },
-    //       },
-    //     ]);
-
-    //     const avgV2 = await Cve.aggregate([
-    //       {
-    //         $match: {
-    //           'description.description_data.value': {
-    //             $regex: filterRegxp,
-    //             $options: 'i',
-    //           },
-    //           publishedDate: {
-    //             $gte: new Date(body.startDate),
-    //             $lte: new Date(body.endDate),
-    //           },
-    //         },
-    //       },
-    //       {
-    //         $group: {
-    //           _id: null,
-    //           avg: { $avg: '$impact.baseMetricV2.impactScore' },
-    //         },
-    //       },
-    //     ]);
-
-    //     var resultJson = {
-    //       filter: body.filters[i].toUpperCase(),
-    //       noOfCVEs: countCurrentFilterResult,
-    //       avgImpactScoreV2: parseFloat(avgV2[0].avg).toFixed(2),
-    //       avgImpactScoreV3: parseFloat(avgV3[0].avg).toFixed(2),
-    //     };
-    //     result.push(resultJson);
-    //   }
-
-    //   return result;
-    // } catch (err) {
-    //   console.log(err);
-    // }
   },
 };
 

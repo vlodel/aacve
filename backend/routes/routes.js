@@ -8,17 +8,14 @@ const cveController = require('../controllers/cveController');
 
 router.post('/register', userController.createUser);
 router.post('/login', userController.loginUser);
-
-//probably won't use
-router.get('/getLatestCves', cveController.getLatestCves);
-
-router.get('/getCves/:page', cveController.getAllCves);
-router.get('/getNoOfPages', cveController.getNoOfPages);
-router.get('/getByKeywords/', cveController.getByKeyword);
-router.post('/analysisSearch', cveController.analysisSearch);
-
 router.post('/verifyToken', authJwt.verifyToken, (req, res) => {
   res.status(201).send({ success: true });
 });
+
+router.get('/getLatestCves', cveController.getLatestCves);
+router.get('/getCves/:page/:windowHeight', cveController.getAllCves);
+router.get('/getNoOfPages/:windowHeight', cveController.getNoOfPages);
+router.get('/getByKeywords/', cveController.getByKeyword);
+router.post('/analysisSearch', cveController.analysisSearch);
 
 module.exports = router;
