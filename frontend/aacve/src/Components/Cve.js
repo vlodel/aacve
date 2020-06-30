@@ -101,7 +101,7 @@ function Cve(props) {
             </Grid>
             <Divider />
 
-            <Typography variant="h5">Impact</Typography>
+            <Typography variant="h5">Severity</Typography>
             <Grid
               container
               className={classes.cvssContainer}

@@ -37,7 +37,7 @@ function ResponsiveBarChartImpactV3(props) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: 'Average V3 Impact Score',
+          legend: 'Average V3 Base Score',
           legendPosition: 'middle',
           legendOffset: -40,
         }}

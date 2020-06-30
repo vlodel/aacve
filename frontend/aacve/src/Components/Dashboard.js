@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/auth';
+import { useHistory } from 'react-router-dom';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,14 +11,14 @@ import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { useHistory } from 'react-router-dom';
+import DescriptionIcon from '@material-ui/icons/Description';
 import SearchedList from './SearchedList';
 import DefaultList from './DefaultList';
 import Statistics from './Statistics';
+import FileAnalyzer from './FileAnalyzer';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -61,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -126,6 +126,12 @@ function Dashboard(props) {
   const displayStatisticsModule = () => {
     return (
       <Statistics setRenderedComponent={setRenderedComponent}></Statistics>
+    );
+  };
+
+  const displayFileAnalyzer = () => {
+    return (
+      <FileAnalyzer setRenderedComponent={setRenderedComponent}></FileAnalyzer>
     );
   };
 
@@ -252,6 +258,18 @@ function Dashboard(props) {
               Statistics
             </Typography>
           </IconButton>
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={() => {
+              setRenderedComponent('fileAnalyzer');
+            }}
+          >
+            <DescriptionIcon />
+            <Typography className={classes.title} variant="h6" noWrap>
+              File Analyzer
+            </Typography>
+          </IconButton>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
@@ -290,6 +308,8 @@ function Dashboard(props) {
               return displaySearchedCves();
             case 'statistics':
               return displayStatisticsModule();
+            case 'fileAnalyzer':
+              return displayFileAnalyzer();
           }
         })()}
       </div>

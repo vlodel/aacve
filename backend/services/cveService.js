@@ -31,7 +31,12 @@ const cve = {
   getByKeyword: async (keywords) => {
     try {
       if (keywords[0].includes('CVE-')) {
-        const result = await Cve.find({ id: keywords });
+        const result = await Cve.find({
+          id: {
+            $regex: keywords[0],
+            $options: 'i',
+          },
+        });
         return result;
       } else {
         var query = [];
@@ -106,6 +111,16 @@ const cve = {
             },
           },
         ]);
+
+        if (avgV2.length == 0) {
+          let avg = 0;
+          avgV2.push(avg);
+        }
+
+        if (avgV3.length == 0) {
+          let avg = 0;
+          avgV3.push(avg);
+        }
 
         var resultJson = {
           filter: body.filters[i].toUpperCase(),

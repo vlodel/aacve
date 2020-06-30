@@ -38,14 +38,13 @@ function App() {
 
   const existingTokens = JSON.parse(localStorage.getItem('tokens'));
   const [authTokens, setAuthTokens] = useState(existingTokens);
+  const existingUser = JSON.parse(localStorage.getItem('user'));
+  const [currentUser, setCurrentUser] = useState(existingUser);
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
     setAuthTokens(data);
   };
-
-  const existingUser = JSON.parse(localStorage.getItem('user'));
-  const [currentUser, setCurrentUser] = useState(existingUser);
 
   const setUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
