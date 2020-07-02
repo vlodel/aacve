@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { IconButton, Grid, Button } from '@material-ui/core';
+import { IconButton, Grid, Button, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: 8,
+    marginBottom: 8,
   },
 }));
 
@@ -98,6 +99,15 @@ function FileAnalyzer(props) {
           >
             Analyse
           </Button>
+        </Grid>
+        <Grid item>
+          {showChart ? (
+            <div>
+              <Typography variant="h6" noWrap>
+                {currentFile[0].name}
+              </Typography>
+            </div>
+          ) : null}
         </Grid>
       </Grid>
       {showChart ? (
