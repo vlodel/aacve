@@ -12,9 +12,6 @@
 5th Generation
 8 Phase Differential Phase Shift Keying
 8DPSK
-a
-A
-a | x
 a mod b
 A&A
 A(i)
@@ -532,7 +529,6 @@ Awareness
 Awareness and Training
 Awareness, Training, and Education Controls
 AXFR
-b
 B2B
 BAC
 back channel
@@ -6208,8 +6204,6 @@ rv
 rv[0…b]
 rv_length_indicator
 RVTM
-s
-S
 S/MIME
 S/MIME Certificate Association (Resource Record)
 S/RTBH
@@ -7860,8 +7854,6 @@ WWAN
 WWW
 ⎾x⏋
 ⎿x⏌
-x
-X
 x ´ y
 X =? Y
 X • Y
@@ -7913,8 +7905,6 @@ XTS
 xU, xV
 xy
 yU, yV
-Z
-z
 Ze
 zero day attack
 zero fill

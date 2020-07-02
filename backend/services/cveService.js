@@ -123,10 +123,10 @@ const cve = {
         }
 
         var resultJson = {
-          filter: body.filters[i].toUpperCase(),
-          noOfCVEs: countCurrentFilterResult,
-          avgImpactScoreV2: parseFloat(avgV2[0].avg).toFixed(2),
-          avgImpactScoreV3: parseFloat(avgV3[0].avg).toFixed(2),
+          id: body.filters[i].toUpperCase(),
+          count: countCurrentFilterResult,
+          avgBaseScoreV2: parseFloat(avgV2[0].avg).toFixed(2),
+          avgBaseScoreV3: parseFloat(avgV3[0].avg).toFixed(2),
         };
         result.push(resultJson);
       }

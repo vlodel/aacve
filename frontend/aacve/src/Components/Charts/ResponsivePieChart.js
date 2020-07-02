@@ -17,9 +17,9 @@ function ResponsivePieChart(props) {
   useEffect(() => {
     props.data.forEach((element) => {
       data.push({
-        id: element.filter,
-        label: element.filter,
-        value: element.noOfCVEs,
+        id: element.id,
+        label: element.id,
+        value: element.count,
       });
     });
   }, []);
@@ -50,8 +50,8 @@ function ResponsivePieChart(props) {
         motionDamping={15}
         legends={[
           {
-            anchor: 'bottom',
-            direction: 'row',
+            anchor: 'top-left',
+            direction: 'column',
             translateY: 56,
             itemWidth: 100,
             itemHeight: 18,

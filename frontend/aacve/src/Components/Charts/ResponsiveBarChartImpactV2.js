@@ -16,9 +16,9 @@ function ResponsiveBarChartImpactV2(props) {
     <div className={classes.chart}>
       <ResponsiveBar
         data={props.data}
-        indexBy="filter"
+        indexBy="id"
         colorBy={'index'}
-        keys={['avgImpactScoreV2']}
+        keys={['avgBaseScoreV2']}
         margin={{ top: 50, right: 10, bottom: 50, left: 60 }}
         padding={0.3}
         colors={{ scheme: 'nivo' }}

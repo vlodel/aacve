@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  IconButton,
-  Grid,
-  TextField,
-  Typography,
-  Button,
-} from '@material-ui/core';
+import { IconButton, Grid, Button } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { DropzoneAreaBase } from 'material-ui-dropzone';
 import axios from 'axios';
+import ResponsivePieChart from './Charts/ResponsivePieChart';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -37,10 +31,14 @@ const useStyles = makeStyles((theme) => ({
 function FileAnalyzer(props) {
   const classes = useStyles();
   const filesLimit = 1;
+  const maxFileSize = 10000000;
 
   const [currentFile, setCurrentFile] = useState();
+  const [showChart, setShowChart] = useState(false);
+  const [chartData, setChartData] = useState();
 
   const handleFileUpload = async () => {
+    setShowChart(false);
     const formData = new FormData();
     formData.append('document', currentFile[0]);
 
@@ -53,7 +51,9 @@ function FileAnalyzer(props) {
       data: formData,
     });
 
-    console.log(result);
+    console.log(result.data);
+    setChartData(result.data);
+    setShowChart(true);
   };
 
   return (
@@ -77,7 +77,8 @@ function FileAnalyzer(props) {
         <Grid item>
           <div className={classes.dropzone}>
             <DropzoneArea
-              acceptedFiles={['.txt', '.pdf', '.docx']}
+              acceptedFiles={['.docx']}
+              maxFileSize={maxFileSize}
               dropzoneText={'Click or drag & drop your file here'}
               filesLimit={filesLimit}
               onChange={(file) => setCurrentFile(file)}
@@ -99,6 +100,9 @@ function FileAnalyzer(props) {
           </Button>
         </Grid>
       </Grid>
+      {showChart ? (
+        <ResponsivePieChart data={chartData}></ResponsivePieChart>
+      ) : null}
     </div>
   );
 }

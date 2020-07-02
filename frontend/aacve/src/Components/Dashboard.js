@@ -280,9 +280,7 @@ function Dashboard(props) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Typography className={classes.title} noWrap>
-                {console.log(props.currentUser)}
-              </Typography>
+              <Typography className={classes.title} noWrap></Typography>
               <AccountCircle />
             </IconButton>
           </div>
