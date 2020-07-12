@@ -104,14 +104,16 @@ function FileAnalyzer(props) {
           {showChart ? (
             <div>
               <Typography variant="h6" noWrap>
-                {currentFile[0].name}
+                {currentFile.length != 0 ? currentFile[0].name : null}
               </Typography>
             </div>
           ) : null}
         </Grid>
       </Grid>
       {showChart ? (
-        <ResponsivePieChart data={chartData}></ResponsivePieChart>
+        <div>
+          <ResponsivePieChart data={chartData}></ResponsivePieChart>
+        </div>
       ) : null}
     </div>
   );

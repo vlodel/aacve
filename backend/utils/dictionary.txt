@@ -733,9 +733,6 @@ Bytelen
 Bytewise matching
 Byzantine Fault Tolerant
 Byzantine fault tolerant proof of stake consensus model
-C
-C
-c
 C#j
 C&A
 C(ie)
@@ -1728,8 +1725,6 @@ cyberspace superiority
 CybOX
 Cycle Time
 cyclic redundancy check (CRC)
-D
-d
 D/A
 D/M/E
 D/RTBH
@@ -2157,7 +2152,6 @@ Dynamic Link Library
 dynamic subsystem
 Dynamically Linked Library
 Dynamics Host Configuration Protocol
-e
 E.O.
 E[ ]
 E3
@@ -2506,7 +2500,6 @@ Extraction-then-Expansion
 extranet
 exu
 exu
-F
 F.I.R.E.
 FACCI
 Facilitator
@@ -2807,8 +2800,6 @@ Functionality Testing
 FUS
 Fuzz Testing
 FY
-g
-G
 Galois Counter Mode (algorithm)
 Galois Message Authentication Code
 Galois/Counter Mode
@@ -2956,10 +2947,6 @@ GUTI
 GW
 GWES
 gxy
-H
-h
-h
-H
 H()
 H(M)
 H(x)
@@ -3158,8 +3145,6 @@ hypervisor
 Hypothesis (Alternative)
 Hypothesis (Null)
 Hz
-I
-i
 I&A
 I&W
 I/O
@@ -3339,8 +3324,6 @@ Implementation Under Test
 Import
 IMS
 IMSI
-In
-IN
 inadvertent disclosure
 Incentive Mechanism
 incident
@@ -3762,7 +3745,6 @@ IVA
 Ivn
 IWG
 IXP
-j
 jamming
 Java
 Java API for XML Registries
@@ -3814,7 +3796,6 @@ JUNOS
 Just-in-time
 JVM
 JWT
-K
 k mod p
 K(i)
 K1
@@ -4025,8 +4006,6 @@ kwkBits
 KWP
 KWS
 KYC
-L
-l
 l(n)
 L2CAP
 L2F
@@ -4232,7 +4211,6 @@ LTS
 LUA
 LVP
 LXC
-m
 M&S
 M2M
 MA
@@ -4614,8 +4592,6 @@ mutual authentication
 MVNO
 mW
 MX
-n
-N
 N/A
 NAC
 NACAM
@@ -5186,7 +5162,6 @@ OVF
 OWASP
 OWL-S
 Owner
-P
 P#j
 P*n
 P.L.
@@ -5762,8 +5737,6 @@ P-value
 PWA
 PXE
 PY
-q
-Q
 QA/QC
 Qe,U, Qe,V
 QEMU (Quick Emulator)
@@ -5792,8 +5765,6 @@ Quick Mode
 Quick Response
 Quick Response (code)
 Quote
-r
-R
 R&D
 R/W
 RA
@@ -7070,8 +7041,6 @@ system-specific control
 system-specific security control
 System-Theoretic Process Analysis
 SZ
-t
-T
 T(x, k)
 T1 Line
 T3 Line
@@ -7444,8 +7413,6 @@ type accreditation
 type authorization
 type certification
 Type I error
-u
-U
 U, V
 U.S.
 U.S. Computer Emergency Readiness Team
@@ -7602,7 +7569,6 @@ UTSA
 Uu
 UUID
 UWB
-V
 Valid
 Valid Data Element
 valid length
@@ -7714,7 +7680,6 @@ Vulnerability Scanning
 VXLAN
 VXLAN Network Identifier
 VXLAN Tunnel Endpoint
-w
 W(S)
 W-1(C)
 W3C

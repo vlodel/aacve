@@ -7,6 +7,11 @@ import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 import axios from 'axios';
 import Statistics from './Components/Statistics';
+import {
+  MuiThemeProvider,
+  createMuiTheme,
+  CssBaseline,
+} from '@material-ui/core';
 
 function App() {
   useEffect(() => {
@@ -50,6 +55,32 @@ function App() {
     localStorage.setItem('user', JSON.stringify(user));
     setCurrentUser(user);
   };
+
+  const theme = createMuiTheme({
+    palette: {
+      background: {
+        default: '#2e2e2e',
+      },
+      primary: {
+        main: '#c9a95e',
+      },
+      secondary: {
+        main: '#ffffff',
+      },
+    },
+    overrides: {
+      MuiPaginationItem: {
+        root: {
+          color: '#ffffff',
+        },
+      },
+      MuiListItem: {
+        root: {
+          color: '#ffffff',
+        },
+      },
+    },
+  });
 
   return (
     <AuthContext.Provider
