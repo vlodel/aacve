@@ -13,7 +13,9 @@ import {
   Button,
   Link,
   Grid,
+  Snackbar,
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 function Login(props) {
   const classes = useStyles();
 
@@ -40,37 +46,61 @@ function Login(props) {
   const [password, setPassword] = useState('');
   const { setAuthTokens } = useAuth();
   const { setCurrentUser } = useAuth();
-
   const history = useHistory();
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const handleLoginClick = async () => {
-    const result = await axios({
-      method: 'POST',
-      url: `${process.env.REACT_APP_API_URL}/login`,
-      data: {
-        email: email,
-        password: password,
-      },
-    });
-
-    if (result.status === 200) {
-      console.log(result.data);
-      setIsError(false);
-      setAuthTokens(result.data.accessToken);
-      setLoggedIn(true);
-      setCurrentUser({
-        email: result.data.email,
-        firstName: result.data.firstName,
-        lastName: result.data.lastName,
-      });
+  const handleLoginClick = () => {
+    if (email.length != 0 && password.length != 0) {
+      axios({
+        method: 'POST',
+        url: `${process.env.REACT_APP_API_URL}/login`,
+        data: {
+          email: email,
+          password: password,
+        },
+      })
+        .then((result) => {
+          if (result.status === 200) {
+            console.log(result.data);
+            setIsError(false);
+            setAuthTokens(result.data.accessToken);
+            setLoggedIn(true);
+            setCurrentUser({
+              email: result.data.email,
+              firstName: result.data.firstName,
+              lastName: result.data.lastName,
+            });
+          }
+        })
+        .catch((err) => {
+          if (err.message.includes('404')) {
+            setIsError(true);
+          }
+        });
     } else {
-      setIsError(true);
+      setIsAlertOpen(true);
     }
   };
 
   if (isLoggedIn) {
     return <Redirect to="/dashboard" />;
   }
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setIsAlertOpen(false);
+  };
+
+  const handleErrorClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setIsError(false);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -131,6 +161,26 @@ function Login(props) {
             </Grid>
           </Grid>
         </form>
+      </div>
+      <div>
+        <Snackbar
+          open={isAlertOpen}
+          autoHideDuration={4000}
+          onClose={handleAlertClose}
+        >
+          <Alert onClose={handleAlertClose} severity="error">
+            Please fill in all the fields!
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={isError}
+          autoHideDuration={4000}
+          onClose={handleErrorClose}
+        >
+          <Alert onClose={handleErrorClose} severity="error">
+            Invalid email and password!
+          </Alert>
+        </Snackbar>
       </div>
     </Container>
   );

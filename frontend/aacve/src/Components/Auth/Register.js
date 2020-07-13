@@ -10,7 +10,9 @@ import {
   Button,
   Link,
   Grid,
+  Snackbar,
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 function Register() {
   const classes = useStyles();
 
@@ -35,26 +41,39 @@ function Register() {
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const history = useHistory();
 
   const handleRegisterClick = () => {
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/register`, {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-      })
-      .then((result) => {
-        if (result.status === 201) {
-          console.log(result.data.message);
-          history.push('/login');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (firstName && lastName && email && password) {
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/register`, {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        })
+        .then((result) => {
+          if (result.status === 201) {
+            console.log(result.data.message);
+            history.push('/login');
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setIsAlertOpen(true);
+    }
+  };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setIsAlertOpen(false);
   };
 
   return (
@@ -129,6 +148,17 @@ function Register() {
             </Grid>
           </Grid>
         </form>
+      </div>
+      <div>
+        <Snackbar
+          open={isAlertOpen}
+          autoHideDuration={4000}
+          onClose={handleAlertClose}
+        >
+          <Alert onClose={handleAlertClose} severity="error">
+            Please fill in all the fields!
+          </Alert>
+        </Snackbar>
       </div>
     </Container>
   );
