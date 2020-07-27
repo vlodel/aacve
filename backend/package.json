@@ -31,6 +31,8 @@
     "mysql2": "^2.1.0",
     "node-html-parser": "^1.2.8",
     "nodemon": "^2.0.2",
+    "pdf-parse": "^1.1.1",
+    "pdf2html": "^2.5.2",
     "pdfreader": "^1.0.7",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",

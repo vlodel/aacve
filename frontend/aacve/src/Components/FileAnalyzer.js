@@ -78,7 +78,7 @@ function FileAnalyzer(props) {
         <Grid item>
           <div className={classes.dropzone}>
             <DropzoneArea
-              acceptedFiles={['.docx']}
+              acceptedFiles={['.docx', '.pdf']}
               maxFileSize={maxFileSize}
               dropzoneText={'Click or drag & drop your file here'}
               filesLimit={filesLimit}

@@ -14,53 +14,109 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then(() => {
+  .then(async () => {
     console.log('MongoDB connection successful.');
+    const files = fs.readdirSync('../cves');
+    if (!files) {
+      console.log(`Unable to read directory`);
+    } else {
+      for (const filePath of files) {
+        const file = fs.readFileSync('../cves/' + filePath);
+        let jsonFile = JSON.parse(file);
+        var cveArray = jsonFile.CVE_Items;
 
-    fs.readdir('../cves', async (err, files) => {
-      if (err) {
-        console.log(`Unable to read directory: ` + err);
-      } else {
-        files.forEach((filePath) => {
-          fs.readFile('../cves/' + filePath, (err, data) => {
-            let jsonFile = JSON.parse(data);
-            var cveArray = jsonFile.CVE_Items;
-
-            for (const cveItem of cveArray) {
-              if (
-                !cveItem.cve.description.description_data[0].value.includes(
-                  '** REJECT **'
-                )
-              ) {
-                let optimizedCve = new cveModel({
-                  id: cveItem.cve.CVE_data_meta.ID,
-                  references: cveItem.cve.references,
-                  description: cveItem.cve.description,
-                  impact: cveItem.impact,
-                  publishedDate: cveItem.publishedDate,
-                  lastModifiedDate: cveItem.lastModifiedDate,
-                });
-                cveModel.findOneAndUpdate(
-                  { id: optimizedCve.id },
-                  optimizedCve,
-                  { upsert: true, useFindAndModify: false },
-                  (err, doc) => {
-                    if (err) console.log(err);
-                  }
-                );
+        for (const cveItem of cveArray) {
+          if (
+            !cveItem.cve.description.description_data[0].value.includes(
+              '** REJECT **'
+            )
+          ) {
+            let optimizedCve = new cveModel({
+              id: cveItem.cve.CVE_data_meta.ID,
+              references: cveItem.cve.references,
+              description: cveItem.cve.description,
+              impact: cveItem.impact,
+              publishedDate: cveItem.publishedDate,
+              lastModifiedDate: cveItem.lastModifiedDate,
+            });
+            cveModel.findOneAndUpdate(
+              { id: optimizedCve.id },
+              optimizedCve,
+              { upsert: true, useFindAndModify: false },
+              (err, doc) => {
+                if (err) console.log(err);
               }
-            }
-            console.log(filePath + ' read.');
-          });
-        });
+            );
+          }
+        }
+        console.log(filePath + ' read.');
       }
-    });
+    }
+    // mongoose.disconnect();
+    // console.log('Finished updating the cves database.');
+    // console.log('MongoDB connection ended.');
   })
   .then(() => {
-    mongoose.disconnect();
     console.log('Finished updating the cves database.');
-    console.log('MongoDB connection ended.');
   })
   .catch((err) => {
     console.log(`MongoDB connection error: ${err}`);
   });
+
+// mongoose.connect(`mongodb://${server}/${database}`, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true,
+//   socketTimeoutMS: 30000,
+//   keepAlive: true,
+// });
+
+// console.log('MongoDB connection successful.');
+// const files = fs.readdirSync('../cves');
+
+// console.log(files);
+// if (!files) {
+//   console.log(`Unable to read directory: `);
+// } else {
+//   for (const filePath of files) {
+//     const file = fs.readFileSync('../cves/' + filePath);
+//     let jsonFile = JSON.parse(file);
+//     var cveArray = jsonFile.CVE_Items;
+
+//     for (const cveItem of cveArray) {
+//       if (
+//         !cveItem.cve.description.description_data[0].value.includes(
+//           '** REJECT **'
+//         )
+//       ) {
+//         let optimizedCve = new cveModel({
+//           id: cveItem.cve.CVE_data_meta.ID,
+//           references: cveItem.cve.references,
+//           description: cveItem.cve.description,
+//           impact: cveItem.impact,
+//           publishedDate: cveItem.publishedDate,
+//           lastModifiedDate: cveItem.lastModifiedDate,
+//         });
+//         cveModel.findOneAndUpdate(
+//           { id: optimizedCve.id },
+//           optimizedCve,
+//           { upsert: true, useFindAndModify: false },
+//           (err, doc) => {
+//             if (err) console.log(err);
+//           }
+//         );
+//       }
+//     }
+//     console.log(filePath + ' read.');
+//   }
+
+//   // mongoose.disconnect();
+//   console.log('Finished updating the cves database.');
+//   // console.log('MongoDB connection ended.');
+// }
+
+// // .then(() => {
+// //   mongoose.disconnect();
+// //   console.log('Finished updating the cves database.');
+// //   console.log('MongoDB connection ended.');
+// // })
