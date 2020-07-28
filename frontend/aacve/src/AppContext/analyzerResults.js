@@ -2,6 +2,6 @@ import { createContext, useContext } from 'react';
 
 export const AnalyzerContext = createContext();
 
-export function useAuth() {
+export function useAnalyzerContext() {
   return useContext(AnalyzerContext);
 }

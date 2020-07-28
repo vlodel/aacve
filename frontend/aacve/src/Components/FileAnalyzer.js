@@ -7,6 +7,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import ResponsivePieChart from './Charts/ResponsivePieChart';
+import { useAnalyzerContext } from '../AppContext/analyzerResults';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -39,6 +40,8 @@ function FileAnalyzer(props) {
   const [showChart, setShowChart] = useState(false);
   const [chartData, setChartData] = useState();
 
+  const { setAnalyzerResults } = useAnalyzerContext();
+
   const handleFileUpload = async () => {
     setShowChart(false);
     const formData = new FormData();
@@ -56,6 +59,11 @@ function FileAnalyzer(props) {
     console.log(result.data);
     setChartData(result.data);
     setShowChart(true);
+  };
+
+  const handleGoToStatistics = () => {
+    setAnalyzerResults(chartData);
+    props.setRenderedComponent('statistics');
   };
 
   return (
@@ -129,6 +137,9 @@ function FileAnalyzer(props) {
                 color="primary"
                 size="large"
                 startIcon={<EqualizerIcon />}
+                onClick={() => {
+                  handleGoToStatistics();
+                }}
               >
                 Go to statistics
               </Button>

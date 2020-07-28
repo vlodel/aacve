@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, TextField, Grid } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import Button from '@material-ui/core/Button';
 import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns';
 import enLocale from 'date-fns/locale/en-GB';
@@ -14,6 +15,9 @@ import { ResponsiveBar } from '@nivo/bar';
 import ResponsiveBarChartImpactV2 from './Charts/ResponsiveBarChartImpactV2';
 import ResponsivePieChart from './Charts/ResponsivePieChart';
 import ResponsiveBarChartImpactV3 from './Charts/ResponsiveBarChartImpactV3';
+import { useAnalyzerContext } from '../AppContext/analyzerResults';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,6 +45,24 @@ function Statistics(props) {
   const [inputs, setInputs] = useState(['']);
   const [showCharts, setShowCharts] = useState(false);
   const [chartsData, setChartsData] = useState();
+  const [results, setResults] = useState();
+  const { analyzerResults } = useAnalyzerContext();
+  const { setAnalyzerResults } = useAnalyzerContext();
+
+  useEffect(() => {
+    if (analyzerResults) {
+      const reverseData = analyzerResults.reverse();
+
+      const values = [...inputs];
+      for (let i = 0; i < 5; i++) {
+        const filter = reverseData[i].id;
+        values[i] = filter;
+        setInputs(values);
+      }
+
+      setAnalyzerResults(null);
+    }
+  }, []);
 
   const handleChangeInput = (index, event) => {
     const values = [...inputs];
@@ -81,16 +103,60 @@ function Statistics(props) {
     setShowCharts(true);
   };
 
+  const handleExport = () => {
+    const input = document.getElementsByClassName(
+      'MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-xs-center'
+    );
+
+    html2canvas(input[0]).then((canvas) => {
+      var imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0, 220, 300);
+      pdf.save('download.pdf');
+    });
+  };
+
   const displayCharts = () => {
     return (
       <div>
-        <ResponsivePieChart data={chartsData}></ResponsivePieChart>
-        <ResponsiveBarChartImpactV3
-          data={chartsData}
-        ></ResponsiveBarChartImpactV3>
-        <ResponsiveBarChartImpactV2
-          data={chartsData}
-        ></ResponsiveBarChartImpactV2>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="flex-start"
+            >
+              <Grid item xs={9}>
+                <ResponsivePieChart data={chartsData}></ResponsivePieChart>
+              </Grid>
+              <Grid item xs={3}>
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  startIcon={<GetAppIcon />}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  Export results
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <ResponsiveBarChartImpactV3
+              data={chartsData}
+            ></ResponsiveBarChartImpactV3>
+          </Grid>
+          <Grid item>
+            <ResponsiveBarChartImpactV2
+              data={chartsData}
+            ></ResponsiveBarChartImpactV2>
+          </Grid>
+        </Grid>
       </div>
     );
   };

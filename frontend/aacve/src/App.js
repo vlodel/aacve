@@ -46,6 +46,7 @@ function App() {
   const [authTokens, setAuthTokens] = useState(existingTokens);
   const existingUser = JSON.parse(localStorage.getItem('user'));
   const [currentUser, setCurrentUser] = useState(existingUser);
+  const [analyzerResults, setAnalyzerResults] = useState(null);
 
   const setTokens = (data) => {
     localStorage.setItem('tokens', JSON.stringify(data));
@@ -55,6 +56,10 @@ function App() {
   const setUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user));
     setCurrentUser(user);
+  };
+
+  const setResults = (results) => {
+    setAnalyzerResults(results);
   };
 
   const theme = createMuiTheme({
@@ -92,15 +97,22 @@ function App() {
         setCurrentUser: setUser,
       }}
     >
-      <Router>
-        <div>
-          <Redirect to="/dashboard" />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/statistics" component={Statistics} />
-        </div>
-      </Router>
+      <AnalyzerContext.Provider
+        value={{
+          analyzerResults,
+          setAnalyzerResults: setResults,
+        }}
+      >
+        <Router>
+          <div>
+            <Redirect to="/dashboard" />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/statistics" component={Statistics} />
+          </div>
+        </Router>
+      </AnalyzerContext.Provider>
     </AuthContext.Provider>
   );
 }
