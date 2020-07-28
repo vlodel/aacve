@@ -1,1 +1,1 @@
-# Thesis: Automated Analysis of Existing Vulnerabilities
+# AACVE: Automated Analysis of Existing Vulnerabilities
