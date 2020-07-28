@@ -51,6 +51,12 @@ const fileHandler = {
       });
     }
 
+    if (resultsMap) {
+      resultsMap.sort((a, b) => {
+        return a.count - b.count;
+      });
+    }
+
     return resultsMap;
   },
 };

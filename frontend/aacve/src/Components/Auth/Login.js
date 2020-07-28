@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../../context/auth';
+import { useAuth } from '../../AppContext/auth';
 import {
   CssBaseline,
   Typography,

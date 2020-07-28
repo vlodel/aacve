@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Grid, Button, Typography } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import { DropzoneArea } from 'material-ui-dropzone';
 import axios from 'axios';
 import ResponsivePieChart from './Charts/ResponsivePieChart';
@@ -112,7 +113,27 @@ function FileAnalyzer(props) {
       </Grid>
       {showChart ? (
         <div>
-          <ResponsivePieChart data={chartData}></ResponsivePieChart>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+          >
+            <Grid item xs={9}>
+              <ResponsivePieChart data={chartData}></ResponsivePieChart>
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<EqualizerIcon />}
+              >
+                Go to statistics
+              </Button>
+            </Grid>
+          </Grid>
         </div>
       ) : null}
     </div>

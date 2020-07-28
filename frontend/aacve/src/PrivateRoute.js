@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from './context/auth';
+import { useAuth } from './AppContext/auth';
 import axios from 'axios';
 
 function PrivateRoute({ component: Component, ...rest }) {

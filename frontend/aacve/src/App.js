@@ -4,7 +4,8 @@ import Login from './Components/Auth/Login';
 import Dashboard from './Components/Dashboard';
 import Register from './Components/Auth/Register';
 import PrivateRoute from './PrivateRoute';
-import { AuthContext } from './context/auth';
+import { AuthContext } from './AppContext/auth';
+import { AnalyzerContext } from './AppContext/analyzerResults';
 import axios from 'axios';
 import Statistics from './Components/Statistics';
 import {
