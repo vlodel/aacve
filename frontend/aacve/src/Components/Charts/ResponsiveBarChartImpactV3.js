@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   chart: {
     height: '50vh',
-    width: '100vw',
+    width: '80vw',
   },
 }));
 

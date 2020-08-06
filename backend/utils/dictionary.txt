@@ -737,7 +737,6 @@ C#j
 C&A
 C(ie)
 C(ie,js)
-C*n
 C, C0, C1
 C, CU, CV
 C.F.D.
@@ -2947,7 +2946,6 @@ GUTI
 GW
 GWES
 gxy
-H()
 H(M)
 H(x)
 H.323
@@ -4480,7 +4478,6 @@ MMC
 MME
 MMS
 MMT
-Mn*
 MNO
 MO
 MOA
@@ -5163,7 +5160,6 @@ OWASP
 OWL-S
 Owner
 P#j
-P*n
 P.L.
 P_HASH
 P1,…,P64

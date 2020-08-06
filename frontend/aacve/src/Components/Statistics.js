@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     height: '50vh',
     width: '80%',
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 function Statistics(props) {
@@ -110,8 +113,14 @@ function Statistics(props) {
 
     html2canvas(input[0]).then((canvas) => {
       var imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0, 220, 300);
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+      });
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight - 20);
       pdf.save('download.pdf');
     });
   };
@@ -127,22 +136,8 @@ function Statistics(props) {
               justify="center"
               alignItems="flex-start"
             >
-              <Grid item xs={9}>
+              <Grid>
                 <ResponsivePieChart data={chartsData}></ResponsivePieChart>
-              </Grid>
-              <Grid item xs={3}>
-                <Button
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  startIcon={<GetAppIcon />}
-                  onClick={() => {
-                    handleExport();
-                  }}
-                >
-                  Export results
-                </Button>
               </Grid>
             </Grid>
           </Grid>
@@ -237,17 +232,46 @@ function Statistics(props) {
             </IconButton>
           </div>
         ))}
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          startIcon={<ShowChartIcon />}
-          onClick={() => {
-            handleClickAnalyse();
-          }}
-        >
-          Analyse
-        </Button>
+        <div>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<ShowChartIcon />}
+                onClick={() => {
+                  handleClickAnalyse();
+                }}
+              >
+                Analyse
+              </Button>
+            </Grid>
+
+            <Grid item>
+              {showCharts && (
+                <Button
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  startIcon={<GetAppIcon />}
+                  onClick={() => {
+                    handleExport();
+                  }}
+                >
+                  Export results
+                </Button>
+              )}
+            </Grid>
+          </Grid>
+        </div>
         {showCharts && displayCharts()}
       </div>
     </div>

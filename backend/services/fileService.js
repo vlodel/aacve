@@ -14,9 +14,10 @@ const fileHandler = {
     var resultsMap = [];
 
     if (file.mimetype === 'application/pdf') {
-      let dataBuffer = fs.readFileSync(file.path);
+      let dataBuffer = file;
+      console.log(dataBuffer);
 
-      const documentData = await pdf(dataBuffer);
+      const documentData = await pdf(dataBuffer.buffer);
 
       dictionaryKeywords.forEach((keyword) => {
         var keywordRegexp = new RegExp(`\\b${keyword}\\b`, 'g');
