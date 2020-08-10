@@ -18,6 +18,7 @@ const fileHandler = {
       console.log(dataBuffer);
 
       const documentData = await pdf(dataBuffer.buffer);
+      console.log(documentData);
 
       dictionaryKeywords.forEach((keyword) => {
         var keywordRegexp = new RegExp(`\\b${keyword}\\b`, 'g');

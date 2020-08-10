@@ -25,7 +25,9 @@
     "react-dom": "^16.13.0",
     "react-infinite-scroll-component": "^5.0.4",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "react-virtualized": "^9.21.2",
+    "save-svg-as-png": "^1.4.17"
   },
   "scripts": {
     "start": "react-scripts start",

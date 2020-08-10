@@ -11,7 +11,6 @@ import DateFnsAdapter from '@material-ui/pickers/adapter/date-fns';
 import enLocale from 'date-fns/locale/en-GB';
 import { LocalizationProvider, DatePicker } from '@material-ui/pickers';
 import axios from 'axios';
-import { ResponsiveBar } from '@nivo/bar';
 import ResponsiveBarChartImpactV2 from './Charts/ResponsiveBarChartImpactV2';
 import ResponsivePieChart from './Charts/ResponsivePieChart';
 import ResponsiveBarChartImpactV3 from './Charts/ResponsiveBarChartImpactV3';
@@ -107,19 +106,15 @@ function Statistics(props) {
   };
 
   const handleExport = () => {
-    const input = document.getElementsByClassName(
-      'MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-xs-center'
-    );
+    const input = document.getElementById('chartsContainer');
 
-    html2canvas(input[0]).then((canvas) => {
+    html2canvas(input).then((canvas) => {
       var imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'landscape',
       });
-      const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
+      const pdfHeight = pdf.internal.pageSize.getHeight();
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight - 20);
       pdf.save('download.pdf');
     });
@@ -128,7 +123,13 @@ function Statistics(props) {
   const displayCharts = () => {
     return (
       <div>
-        <Grid container direction="column" justify="center" alignItems="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          id="chartsContainer"
+        >
           <Grid item>
             <Grid
               container

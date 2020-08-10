@@ -3,7 +3,7 @@ const fileService = require('../services/fileService');
 const analyzeFile = async (req, res) => {
   if (req.file) {
     const result = await fileService.analyzeFile(req.file);
-    console.log(result);
+    // console.log(result);
 
     if (result && Object.keys(result).length !== 0) {
       res.status(200).send(result);
