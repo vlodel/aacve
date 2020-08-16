@@ -3,11 +3,22 @@ const cheerio = require('cheerio');
 const got = require('got');
 const fs = require('fs');
 const path = require('path');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const csvWriter = createCsvWriter({
+  path: 'articlesMetadata.csv',
+  header: [
+    { id: 'articleTitle', title: 'articleTitle' },
+    { id: 'issue', title: 'issue' },
+    { id: 'URL', title: 'URL' },
+  ],
+});
+
+const csvData = [];
 
 const requestFile = async (URL, fileName) => {
   http.get(URL, (response) => {
     const file = fs.createWriteStream(
-      path.join(__dirname, './revistaIE') + '/' + fileName + '.pdf'
+      path.join(__dirname, './IEMagazine') + '/' + fileName + '.pdf'
     );
     response.pipe(file);
   });
@@ -41,8 +52,21 @@ const IEParser = async () => {
 
     for (let i = 0; i < issuesLinks.length; i++) {
       const response = await got(issuesLinks[i]);
+
       const $ = cheerio.load(response.body);
+
       var anchors = $('table').find('a');
+      var headers3 = $('table').find('h3');
+
+      var issue = '';
+
+      headers3.each(function (index, element) {
+        if ($(element).text().includes('Vol.')) {
+          issue = $(element).text();
+          console.log(issue);
+        }
+      });
+
       anchors.each(function (index, element) {
         var link = $(element).attr('href');
         var title = $(element).text();
@@ -59,11 +83,13 @@ const IEParser = async () => {
             contentLinks.push({
               URL: link,
               title: title,
+              issue: issue,
             });
           } else {
             contentLinks.push({
               URL: 'http://www.revistaie.ase.ro/' + link,
               title: title,
+              issue: issue,
             });
           }
         }
@@ -72,7 +98,16 @@ const IEParser = async () => {
 
     for (let i = 0; i < contentLinks.length; i++) {
       requestFile(contentLinks[i].URL, contentLinks[i].title);
+      csvData.push({
+        articleTitle: contentLinks[i].title,
+        issue: contentLinks[i].issue,
+        URL: contentLinks[i].URL,
+      });
     }
+
+    csvWriter.writeRecords(csvData).then(() => {
+      console.log('CSV file written.');
+    });
   } catch (err) {
     console.log(err.message);
   }

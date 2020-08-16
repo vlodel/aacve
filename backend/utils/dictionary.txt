@@ -327,7 +327,6 @@ ARPA
 Array
 artifact
 artificial intelligence (AI)
-AS
 AS&W
 ASA
 ASC
@@ -395,7 +394,6 @@ Asymptotic Distribution
 Asynchronous Connection-Less
 Asynchronous JavaScript and XML
 Asynchronous Transfer Mode
-AT
 ATA
 ATC
 ATIM
@@ -723,7 +721,6 @@ Business Process Specification Schema
 Business Reference Model
 Business/Mission Objectives
 Business-To-Business
-BY
 BYOD
 Byte
 Byte length
@@ -757,7 +754,6 @@ CAK
 call back
 Call Detail Record
 Call Processor
-CAN
 Canadian Centre for Cyber Security
 Canadian Standards Association
 Candidate Checklist
@@ -2634,7 +2630,6 @@ FedRAMP
 FED-STD
 FEK
 FEMA
-FF
 FFC
 FFMIA
 FFRDC
@@ -3673,7 +3668,6 @@ IRR
 IRS
 IRT
 IRTF
-IS
 ISA
 ISAC
 ISACs
@@ -4414,8 +4408,6 @@ MGF
 mgfSeed
 MGMT
 MHz
-Mi
-MI
 MIA
 MIB
 MIC
@@ -4854,7 +4846,6 @@ North American Energy Standards Board
 North American Network Operators Group
 North American Security Products Organization
 North Atlantic Treaty Organization
-NoT
 Not Applicable
 Not Releasable to Foreign Nationals
 NPE
@@ -4908,8 +4899,6 @@ NV
 NVD
 NVLAP
 NW3C
-O
-Ø
 O1,…,O64
 OADR
 OAEP
@@ -4991,7 +4980,6 @@ OLIR Template
 OMA
 OMB
 OMG
-On
 on behalf of (an agency)
 ONA
 On-Access Scanning

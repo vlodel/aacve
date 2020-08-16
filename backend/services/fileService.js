@@ -15,13 +15,13 @@ const fileHandler = {
 
     if (file.mimetype === 'application/pdf') {
       let dataBuffer = file;
-      console.log(dataBuffer);
+      // console.log(dataBuffer);
 
       const documentData = await pdf(dataBuffer.buffer);
-      console.log(documentData);
+      // console.log(documentData);
 
       dictionaryKeywords.forEach((keyword) => {
-        var keywordRegexp = new RegExp(`\\b${keyword}\\b`, 'g');
+        var keywordRegexp = new RegExp(`\\b${keyword}\\b`, 'gi');
         if ((documentData.text.match(keywordRegexp) || []).length != 0) {
           var occurencesCount = (documentData.text.match(keywordRegexp) || [])
             .length;
