@@ -37,160 +37,383 @@ const csvWriter = createCsvWriter({
   ],
 });
 
-const securityTerms = [
-  { term: 'security', score: '100' },
-  { term: 'secure', score: '100' },
-  { term: 'vulnerability', score: '90' },
-  { term: 'vulnerabilities', score: '90' },
-  { term: 'risk', score: '70' },
-  { term: 'risks', score: '70' },
-  { term: 'attack', score: '70' },
-  { term: 'attacks', score: '70' },
-  { term: 'threat', score: '80' },
-  { term: 'threats', score: '80' },
-  { term: 'countermeasures', score: '40' },
-  { term: 'countermeasure', score: '40' },
-  { term: 'critical', score: '40' },
-  { term: 'defend', score: '30' },
-];
-
+const securityTerms = [];
 const articlesMetadata = [];
 const finalData = [];
 
 const IEanalyzer = async () => {
-  // fs.createReadStream(path.join(__dirname, './securityTerms.csv'))
-  //   .pipe(csv())
-  //   .on('data', (row) => {
-  //     securityTerms.push(row);
-  //   })
-  //   .on('end', () => {
-  //     console.log('CSV file successfully read');
-  //     console.log(securityTerms);
-  //   });
+  fs.createReadStream(path.join(__dirname, './securityTerms_v2.csv'))
+    .pipe(csv(['term', 'score']))
+    .on('data', (row) => {
+      row.score = Number(row.score);
+      securityTerms.push(row);
+    })
+    .on('end', () => {
+      console.log('CSV file successfully read');
+      console.log(securityTerms);
 
-  fs.readdir(path.join(__dirname, './IEMagazine'), async (err, filesNames) => {
-    if (err) console.log(err);
+      fs.readdir(
+        path.join(__dirname, './IEMagazine'),
+        async (err, filesNames) => {
+          if (err) console.log(err);
 
-    fs.createReadStream(path.join(__dirname, './articlesMetadata.csv'))
-      .pipe(csv())
-      .on('data', (row) => {
-        articlesMetadata.push(row);
-      })
-      .on('end', async () => {
-        console.log('CSV with articles metadata file successfully read');
+          fs.createReadStream(path.join(__dirname, './articlesMetadata.csv'))
+            .pipe(csv())
+            .on('data', (row) => {
+              articlesMetadata.push(row);
+            })
+            .on('end', async () => {
+              console.log('Articles metadata CSV file successfully read');
 
-        for (let i = 0; i < filesNames.length; i++) {
-          var csvSecurityTerms = [];
-          var csvSecurityTermsScore = 0;
-          const fileName = filesNames[i].replace('.pdf', '');
-          var issue = '';
-          var URL = '';
+              for (let i = 0; i < filesNames.length; i++) {
+                console.log(filesNames[i]);
 
-          for (let j = 0; j < securityTerms.length; j++) {
-            let termRegexp = new RegExp(`\\b${securityTerms[j].term}\\b`, 'gi');
+                var csvSecurityTerms = [];
+                var csvSecurityTermsScore = 0;
+                const fileName = filesNames[i].replace('.pdf', '');
 
-            if (fileName.match(termRegexp)) {
-              let currentArticleMetadata = articlesMetadata.find(
-                (data) => data['articleTitle'] === fileName
-              );
-              issue = currentArticleMetadata.issue.replace(/\s+/g, ' ').trim();
-              URL = currentArticleMetadata.URL;
-
-              csvSecurityTerms.push(securityTerms[j].term);
-              csvSecurityTermsScore += Number(securityTerms[j].score);
-
-              let file = {};
-              file.buffer = fs.readFileSync(
-                path.join(__dirname, '/IEMagazine/' + filesNames[i])
-              );
-              file.mimetype = 'application/pdf';
-
-              var fileResults = await fileService.analyzeFile(file);
-              fileResult = fileResults.slice(
-                Math.max(fileResults.length - 5, 1)
-              );
-
-              var filters = [];
-              for (let i = 0; i < fileResult.length; i++) {
-                filters.push(fileResult[i].id);
-              }
-
-              var mockBody = {
-                filters: filters,
-                startDate: '2010-01-01T15:05:38.000Z',
-                endDate: new Date(),
-              };
-
-              var filtersResults = await cveService.analysisSearch(mockBody);
-              // console.log(filtersResults);
-              var allFiltersAvgBaseScoreV2 =
-                (filtersResults[0].avgBaseScoreV2 +
-                  filtersResults[1].avgBaseScoreV2 +
-                  filtersResults[2].avgBaseScoreV2 +
-                  filtersResults[3].avgBaseScoreV2 +
-                  filtersResults[4].avgBaseScoreV2) /
-                5;
-              var allFiltersAvgBaseScoreV3 =
-                (filtersResults[0].avgBaseScoreV3 +
-                  filtersResults[1].avgBaseScoreV3 +
-                  filtersResults[2].avgBaseScoreV3 +
-                  filtersResults[3].avgBaseScoreV3 +
-                  filtersResults[4].avgBaseScoreV3) /
-                5;
-              console.log(allFiltersAvgBaseScoreV2);
-              console.log(allFiltersAvgBaseScoreV3);
-
-              if (
-                !finalData.some((data) => data['articleTitle'] === fileName)
-              ) {
-                finalData.push({
-                  articleTitle: fileName,
-                  issue: issue,
-                  URL: URL,
-                  filter1: filtersResults[0].id,
-                  noVulnerabilitiesFilter1: filtersResults[0].count,
-                  avgBaseScoreV2Filter1: filtersResults[0].avgBaseScoreV2,
-                  avgBaseScoreV3Filter1: filtersResults[0].avgBaseScoreV3,
-                  filter2: filtersResults[1].id,
-                  noVulnerabilitiesFilter2: filtersResults[1].count,
-                  avgBaseScoreV2Filter2: filtersResults[1].avgBaseScoreV2,
-                  avgBaseScoreV3Filter2: filtersResults[1].avgBaseScoreV3,
-                  filter3: filtersResults[2].id,
-                  noVulnerabilitiesFilter3: filtersResults[2].count,
-                  avgBaseScoreV2Filter3: filtersResults[2].avgBaseScoreV2,
-                  avgBaseScoreV3Filter3: filtersResults[2].avgBaseScoreV3,
-                  filter4: filtersResults[3].id,
-                  noVulnerabilitiesFilter4: filtersResults[3].count,
-                  avgBaseScoreV2Filter4: filtersResults[3].avgBaseScoreV2,
-                  avgBaseScoreV3Filter4: filtersResults[3].avgBaseScoreV3,
-                  filter5: filtersResults[4].id,
-                  noVulnerabilitiesFilter5: filtersResults[4].count,
-                  avgBaseScoreV2Filter5: filtersResults[4].avgBaseScoreV2,
-                  avgBaseScoreV3Filter5: filtersResults[4].avgBaseScoreV3,
-                  allFiltersAvgBaseScoreV2: Number(
-                    allFiltersAvgBaseScoreV2.toFixed(3)
-                  ),
-                  allFiltersAvgBaseScoreV3: Number(
-                    allFiltersAvgBaseScoreV3.toFixed(3)
-                  ),
-                  securityTerms: csvSecurityTerms,
-                  securityTermsScore: csvSecurityTermsScore,
-                });
-              } else {
-                let existingRow = finalData.find(
+                let currentArticleMetadata = articlesMetadata.find(
                   (data) => data['articleTitle'] === fileName
                 );
-                existingRow.securityTermsScore = csvSecurityTermsScore;
-              }
-            }
-          }
-        }
+                let issue = currentArticleMetadata.issue
+                  .replace(/\s+/g, ' ')
+                  .trim();
+                let URL = currentArticleMetadata.URL;
 
-        csvWriter.writeRecords(finalData).then(() => {
-          console.log('CSV file written.');
-        });
-      });
-  });
+                for (let j = 0; j < securityTerms.length; j++) {
+                  let termRegexp = new RegExp(
+                    `\\b${securityTerms[j].term}\\b`,
+                    'gi'
+                  );
+
+                  //security terms article condition
+                  if (fileName.match(termRegexp)) {
+                    csvSecurityTerms.push(securityTerms[j].term);
+                    csvSecurityTermsScore += Number(securityTerms[j].score);
+
+                    let file = {};
+                    file.buffer = fs.readFileSync(
+                      path.join(__dirname, '/IEMagazine/' + filesNames[i])
+                    );
+                    file.mimetype = 'application/pdf';
+
+                    var fileResults = await fileService.analyzeFile(file);
+                    fileResult = fileResults.slice(
+                      Math.max(fileResults.length - 5, 1)
+                    );
+
+                    var filters = [];
+                    for (let i = 0; i < fileResult.length; i++) {
+                      filters.push(fileResult[i].id);
+                    }
+
+                    var mockBody = {
+                      filters: filters,
+                      startDate: '2010-01-01T15:05:38.000Z',
+                      endDate: new Date(),
+                    };
+
+                    var filtersResults = await cveService.analysisSearch(
+                      mockBody
+                    );
+
+                    if (filtersResults.length === 5) {
+                      console.log(filtersResults);
+                      var allFiltersAvgBaseScoreV2 = 0;
+                      var allFiltersAvgBaseScoreV3 = 0;
+
+                      for (let i = 0; i < filtersResults.length; i++) {
+                        allFiltersAvgBaseScoreV2 +=
+                          filtersResults[i].avgBaseScoreV2;
+                        allFiltersAvgBaseScoreV3 +=
+                          filtersResults[i].avgBaseScoreV3;
+                      }
+
+                      console.log(allFiltersAvgBaseScoreV2);
+
+                      allFiltersAvgBaseScoreV2 =
+                        allFiltersAvgBaseScoreV2 / filtersResults.length;
+                      allFiltersAvgBaseScoreV3 =
+                        allFiltersAvgBaseScoreV3 / filtersResults.length;
+
+                      console.log(allFiltersAvgBaseScoreV2);
+                      console.log(allFiltersAvgBaseScoreV3);
+
+                      if (
+                        !finalData.some(
+                          (data) => data['articleTitle'] === fileName
+                        )
+                      ) {
+                        finalData.push({
+                          articleTitle: fileName,
+                          issue: issue,
+                          URL: URL,
+                          filter1:
+                            typeof filtersResults[0].id === 'undefined'
+                              ? 'no filter'
+                              : filtersResults[0].id,
+                          noVulnerabilitiesFilter1:
+                            typeof filtersResults[0].count === 'undefined'
+                              ? '0'
+                              : filtersResults[0].count,
+                          avgBaseScoreV2Filter1:
+                            typeof filtersResults[0].avgBaseScoreV2 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[0].avgBaseScoreV2,
+                          avgBaseScoreV3Filter1:
+                            typeof filtersResults[0].avgBaseScoreV3 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[0].avgBaseScoreV3,
+                          filter2:
+                            typeof filtersResults[1].id === 'undefined'
+                              ? 'no filter'
+                              : filtersResults[1].id,
+                          noVulnerabilitiesFilter2:
+                            typeof filtersResults[1].count === 'undefined'
+                              ? '0'
+                              : filtersResults[1].count,
+                          avgBaseScoreV2Filter2:
+                            typeof filtersResults[1].avgBaseScoreV2 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[1].avgBaseScoreV2,
+                          avgBaseScoreV3Filter2:
+                            typeof filtersResults[1].avgBaseScoreV3 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[1].avgBaseScoreV3,
+                          filter3:
+                            typeof filtersResults[2].id === 'undefined'
+                              ? 'no filter'
+                              : filtersResults[2].id,
+                          noVulnerabilitiesFilter3:
+                            typeof filtersResults[2].count === 'undefined'
+                              ? '0'
+                              : filtersResults[2].count,
+                          avgBaseScoreV2Filter3:
+                            typeof filtersResults[2].avgBaseScoreV2 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[2].avgBaseScoreV2,
+                          avgBaseScoreV3Filter3:
+                            typeof filtersResults[2].avgBaseScoreV3 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[2].avgBaseScoreV3,
+                          filter4:
+                            typeof filtersResults[3].id === 'undefined'
+                              ? 'no filter'
+                              : filtersResults[3].id,
+                          noVulnerabilitiesFilter4:
+                            typeof filtersResults[3].count === 'undefined'
+                              ? '0'
+                              : filtersResults[3].count,
+                          avgBaseScoreV2Filter4:
+                            typeof filtersResults[3].avgBaseScoreV2 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[3].avgBaseScoreV2,
+                          avgBaseScoreV3Filter4:
+                            typeof filtersResults[3].avgBaseScoreV3 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[3].avgBaseScoreV3,
+                          filter5:
+                            typeof filtersResults[4].id === 'undefined'
+                              ? 'no filter'
+                              : filtersResults[4].id,
+                          noVulnerabilitiesFilter5:
+                            typeof filtersResults[4].count === 'undefined'
+                              ? '0'
+                              : filtersResults[4].count,
+                          avgBaseScoreV2Filter5:
+                            typeof filtersResults[4].avgBaseScoreV2 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[4].avgBaseScoreV2,
+                          avgBaseScoreV3Filter5:
+                            typeof filtersResults[4].avgBaseScoreV3 ===
+                            'undefined'
+                              ? '0'
+                              : filtersResults[4].avgBaseScoreV3,
+                          allFiltersAvgBaseScoreV2:
+                            typeof allFiltersAvgBaseScoreV2 === 'undefined'
+                              ? '0'
+                              : Number(allFiltersAvgBaseScoreV2.toFixed(3)),
+                          allFiltersAvgBaseScoreV3:
+                            typeof allFiltersAvgBaseScoreV3 === 'undefined'
+                              ? 0
+                              : Number(allFiltersAvgBaseScoreV3.toFixed(3)),
+                          securityTerms: csvSecurityTerms,
+                          securityTermsScore: csvSecurityTermsScore,
+                        });
+                      } else {
+                        let existingRow = finalData.find(
+                          (data) => data['articleTitle'] === fileName
+                        );
+                        existingRow.securityTermsScore = csvSecurityTermsScore;
+                      }
+                    }
+                  }
+                }
+
+                if (
+                  !finalData.some((data) => data['articleTitle'] === fileName)
+                ) {
+                  let file = {};
+                  file.buffer = fs.readFileSync(
+                    path.join(__dirname, '/IEMagazine/' + filesNames[i])
+                  );
+                  file.mimetype = 'application/pdf';
+
+                  var fileResults = await fileService.analyzeFile(file);
+                  fileResult = fileResults.slice(
+                    Math.max(fileResults.length - 5, 1)
+                  );
+
+                  var filters = [];
+                  for (let i = 0; i < fileResult.length; i++) {
+                    filters.push(fileResult[i].id);
+                  }
+
+                  var mockBody = {
+                    filters: filters,
+                    startDate: '2010-01-01T15:05:38.000Z',
+                    endDate: new Date(),
+                  };
+
+                  var filtersResults = await cveService.analysisSearch(
+                    mockBody
+                  );
+                  if (filtersResults.length === 5) {
+                    console.log(filtersResults);
+
+                    var allFiltersAvgBaseScoreV2 = 0;
+                    var allFiltersAvgBaseScoreV3 = 0;
+
+                    for (let i = 0; i < filtersResults.length; i++) {
+                      allFiltersAvgBaseScoreV2 +=
+                        filtersResults[i].avgBaseScoreV2;
+                      allFiltersAvgBaseScoreV3 +=
+                        filtersResults[i].avgBaseScoreV3;
+                    }
+
+                    allFiltersAvgBaseScoreV2 =
+                      allFiltersAvgBaseScoreV2 / filtersResults.length;
+                    allFiltersAvgBaseScoreV3 =
+                      allFiltersAvgBaseScoreV3 / filtersResults.length;
+
+                    console.log(allFiltersAvgBaseScoreV2);
+                    console.log(allFiltersAvgBaseScoreV3);
+
+                    finalData.push({
+                      articleTitle: fileName,
+                      issue: issue,
+                      URL: URL,
+                      filter1:
+                        typeof filtersResults[0].id === 'undefined'
+                          ? 'no filter'
+                          : filtersResults[0].id,
+                      noVulnerabilitiesFilter1:
+                        typeof filtersResults[0].count === 'undefined'
+                          ? '0'
+                          : filtersResults[0].count,
+                      avgBaseScoreV2Filter1:
+                        typeof filtersResults[0].avgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : filtersResults[0].avgBaseScoreV2,
+                      avgBaseScoreV3Filter1:
+                        typeof filtersResults[0].avgBaseScoreV3 === 'undefined'
+                          ? '0'
+                          : filtersResults[0].avgBaseScoreV3,
+                      filter2:
+                        typeof filtersResults[1].id === 'undefined'
+                          ? 'no filter'
+                          : filtersResults[1].id,
+                      noVulnerabilitiesFilter2:
+                        typeof filtersResults[1].count === 'undefined'
+                          ? '0'
+                          : filtersResults[1].count,
+                      avgBaseScoreV2Filter2:
+                        typeof filtersResults[1].avgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : filtersResults[1].avgBaseScoreV2,
+                      avgBaseScoreV3Filter2:
+                        typeof filtersResults[1].avgBaseScoreV3 === 'undefined'
+                          ? '0'
+                          : filtersResults[1].avgBaseScoreV3,
+                      filter3:
+                        typeof filtersResults[2].id === 'undefined'
+                          ? 'no filter'
+                          : filtersResults[2].id,
+                      noVulnerabilitiesFilter3:
+                        typeof filtersResults[2].count === 'undefined'
+                          ? '0'
+                          : filtersResults[2].count,
+                      avgBaseScoreV2Filter3:
+                        typeof filtersResults[2].avgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : filtersResults[2].avgBaseScoreV2,
+                      avgBaseScoreV3Filter3:
+                        typeof filtersResults[2].avgBaseScoreV3 === 'undefined'
+                          ? '0'
+                          : filtersResults[2].avgBaseScoreV3,
+                      filter4:
+                        typeof filtersResults[3].id === 'undefined'
+                          ? 'no filter'
+                          : filtersResults[3].id,
+                      noVulnerabilitiesFilter4:
+                        typeof filtersResults[3].count === 'undefined'
+                          ? '0'
+                          : filtersResults[3].count,
+                      avgBaseScoreV2Filter4:
+                        typeof filtersResults[3].avgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : filtersResults[3].avgBaseScoreV2,
+                      avgBaseScoreV3Filter4:
+                        typeof filtersResults[3].avgBaseScoreV3 === 'undefined'
+                          ? '0'
+                          : filtersResults[3].avgBaseScoreV3,
+                      filter5:
+                        typeof filtersResults[4].id === 'undefined'
+                          ? 'no filter'
+                          : filtersResults[4].id,
+                      noVulnerabilitiesFilter5:
+                        typeof filtersResults[4].count === 'undefined'
+                          ? '0'
+                          : filtersResults[4].count,
+                      avgBaseScoreV2Filter5:
+                        typeof filtersResults[4].avgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : filtersResults[4].avgBaseScoreV2,
+                      avgBaseScoreV3Filter5:
+                        typeof filtersResults[4].avgBaseScoreV3 === 'undefined'
+                          ? '0'
+                          : filtersResults[4].avgBaseScoreV3,
+                      allFiltersAvgBaseScoreV2:
+                        typeof allFiltersAvgBaseScoreV2 === 'undefined'
+                          ? '0'
+                          : Number(allFiltersAvgBaseScoreV2.toFixed(3)),
+                      allFiltersAvgBaseScoreV3:
+                        typeof allFiltersAvgBaseScoreV3 === 'undefined'
+                          ? 0
+                          : Number(allFiltersAvgBaseScoreV3.toFixed(3)),
+                      securityTerms: '',
+                      securityTermsScore: 0,
+                    });
+                  }
+                }
+              }
+
+              csvWriter.writeRecords(finalData).then(() => {
+                console.log('CSV file written.');
+              });
+            });
+        }
+      );
+    });
 };
 
 IEanalyzer();

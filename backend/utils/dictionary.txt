@@ -1,23 +1,17 @@
-2G
 2nd Generation
 2TDEA
 3DES
-3G
 3rd Generation
 3rd Generation Partnership Project (3GPP)
 3TDEA
-4G
 4th Generation
-5G
 5th Generation
 8 Phase Differential Phase Shift Keying
 8DPSK
 a mod b
 A&A
 A(i)
-a, b
 A/D
-AA
 AAA
 AAAK
 AAD
@@ -29,7 +23,6 @@ ABAC
 Abbreviated Dialing Numbers
 Ability
 Abstract Syntax Notation 1 (ASN.1)
-AC
 Acceptable
 Acceptable Risk
 access
@@ -99,7 +92,6 @@ Actual State
 Actuating Capability
 Actuator
 ACWP
-AD
 AD DS
 AD FS
 Ad Hoc HIEs
@@ -162,7 +154,6 @@ AES-CMAC
 AES-CMAC(k, M)
 AES-Counter Mode
 AES-CTR
-AF
 Affiliated Covered Entities
 Affine Transformation
 AFH
@@ -179,8 +170,6 @@ Aggregation
 Aggressive Mode
 agility
 agreement
-AH
-AI
 AIA
 AIC
 AID
@@ -189,7 +178,6 @@ AIM
 air gap
 AIT
 AJAX
-AK
 AKA
 AKID
 AKM
@@ -262,10 +250,8 @@ Anti-tampering
 Antivirus
 Antivirus Software
 Antivirus Tools
-AO
 AODR
 AOL
-AP
 APDU
 APEC
 Aperiodic Templates Test
@@ -421,7 +407,6 @@ Attribute Value
 attribute-based access control (ABAC)
 attribute-based authorization
 Attribute-Value Pair
-AU
 AuC
 Audience
 audit
@@ -518,7 +503,6 @@ automatic remote rekeying
 Autonomous System (AS)
 Autonomous System Number (ASN)
 Auxiliary Power Unit
-AV
 availability
 Availability Impact
 avf(Q)
@@ -570,7 +554,6 @@ BCH
 BCP
 BCWP
 BCWS
-BD
 BDB
 BDS
 Bearer Assertion
@@ -589,7 +572,6 @@ Bernoulli Random Variable
 BER-TLV
 BER-TLV Data Object
 Best Current Practice
-BF
 BFT
 BGP
 BGP Origin Validation
@@ -604,7 +586,6 @@ BGP-PV
 BGPsec
 BGPSEC-IO
 BGP-SRx
-Bi
 BIA
 Biased
 bi-directional (CDS)
@@ -680,7 +661,6 @@ boundary protection
 boundary protection device
 BPML
 BPSS
-BR
 BR/EDR
 Bring Your Own Device
 BRM
@@ -693,7 +673,6 @@ Brokered Trust
 browsing
 brute force attack
 Brute Force Password Attack
-BS
 BS2I
 BSC
 BSS
@@ -739,11 +718,7 @@ C, CU, CV
 C.F.D.
 C.F.R.
 C1,…,C64
-C2
-C3
 C3I
-C4
-CA
 CA Facility
 CA Technologies
 CAC
@@ -826,7 +801,6 @@ CBEFF Root Header
 CBEFF Sub-Header
 CBOR
 CBSR
-CC
 CCB
 CCC
 CCCS
@@ -846,7 +820,6 @@ CCRB
 CCSS
 ccTLD
 CCTV
-CD
 CD File System
 CDFS
 CDH
@@ -861,7 +834,6 @@ CD-Rewritable
 CD-ROM
 CD-RW
 CDS
-CE
 Cell on Wheels
 Cellular Network Isolation Card (CNIC)
 Cellular Telecommunications and Internet Association
@@ -924,7 +896,6 @@ Certification, Accreditation, and Security Assessments (NIST SP 800-53 security 
 certified TEMPEST technical authority (CTTA)
 certifier
 certify
-CF
 CFB
 CFC
 CFFB
@@ -975,7 +946,6 @@ Chinese Remainder Theorem
 Choreography
 CHUID
 CHVP
-CI
 CIA
 CIDR
 CIDX
@@ -1012,9 +982,7 @@ CISA
 Cisco Global Exploiter
 CISO
 Citect SCADA system
-Cj
 CJA
-CK
 CKG
 CKL
 CKMS
@@ -1067,8 +1035,6 @@ Cloud Service Provider
 CLR
 CLSI
 Cluster
-cm
-CM
 CMaaS
 CMAC
 CMCS
@@ -1082,8 +1048,6 @@ CMT
 CMTC
 CMUF
 CMVP
-Cn
-CN
 CNA
 CNAP
 CNC
@@ -1098,7 +1062,6 @@ CNSSAM
 CNSSD
 CNSSI
 CNSSP
-CO
 COA
 coalition partner
 CoAP
@@ -1467,7 +1430,6 @@ covert storage channel
 Covert Testing
 covert timing channel
 COW
-CP
 CPE
 CPE Attribute Comparison
 CPE Dictionary
@@ -1480,7 +1442,6 @@ CPNI
 CPO
 CPS
 CPU
-CR
 CRADA
 Cradle
 CRAM
@@ -1595,7 +1556,6 @@ cryptologic
 cryptology
 cryptonet evaluation report
 Cryptoperiod
-CS
 CSA
 CSA5
 C-SCRM
@@ -1642,7 +1602,6 @@ Ctri
 CTS
 CTSO
 CTTA
-CU
 CUAS
 CUI
 CUI categories
@@ -1670,7 +1629,6 @@ CVSS-SIG
 CWE
 CWI
 CWSS
-CY
 Cyber
 Cyber Attack
 Cyber Cincinnati-Dayton Cyber Corridor
@@ -1699,7 +1657,6 @@ Cyber Security Research and Development Act of 2002
 Cyber Supply Chain Risk Management
 Cyber Threat
 cyber-physical system(s)
-cybersecurity
 Cybersecurity and Information Assurance
 Cybersecurity and Infrastructure Security Agency
 cybersecurity event
@@ -1711,7 +1668,6 @@ cybersecurity framework profile
 cybersecurity framework subcategory
 Cybersecurity National Action Plan
 Cybersecurity Strategy and Implementation Plan
-cyberspace
 cyberspace attack
 cyberspace capability
 cyberspace defense
@@ -1724,7 +1680,6 @@ D/A
 D/M/E
 D/RTBH
 D/S
-DA
 DAA
 DAC
 DACL
@@ -1797,7 +1752,6 @@ DATO
 DBA
 dBm
 DBMS
-DC
 DC Servo Drive
 DC3
 DCCP
@@ -1811,10 +1765,8 @@ DCOM
 DCO-RA
 DCS
 DCS:SA
-dd
 DDMS
 DDoS
-DE
 de,U, de,V
 DE.AE
 DEA
@@ -1925,8 +1877,6 @@ device registration manager
 Device Role
 DevOps
 DFS
-DG
-DH
 DHCP
 DHE
 DHHS
@@ -1971,7 +1921,6 @@ Digital Signature Algorithm (DSA)
 Digital Subscriber Line
 Digital to Analog Converter
 Digital Video Disc
-Digitization
 DIMA
 direct BLACK wireline
 Direct Digital Manufacturing
@@ -2037,7 +1986,6 @@ DLL
 DLP
 DMARC
 DMZ
-DN
 DNI
 DNP3
 DNS
@@ -2087,13 +2035,10 @@ Dots Per Inch
 Double spend (attack)
 Double spend (problem)
 Downgrading
-DP
-dP
 DPC
 DPCI
 dpi
 DPM
-dQ
 DQPSK
 Draft International Standard
 DRB
@@ -2103,7 +2048,6 @@ DRBG Mechanism Boundary
 Driver Execution Environment
 DRM
 DRP
-DS
 ds,U, ds,V
 DSA
 DSCP
@@ -2149,8 +2093,6 @@ Dynamically Linked Library
 Dynamics Host Configuration Protocol
 E.O.
 E[ ]
-E3
-EA
 EaaS
 EACMS
 EAL
@@ -2174,7 +2116,6 @@ eBGP
 eBits
 EBTS
 ebXML
-EC
 EC2N
 ECA
 ECB
@@ -2194,7 +2135,6 @@ EDI
 EDIV
 EDR
 Education
-EE
 E-E
 EEA
 EEMA
@@ -2211,7 +2151,6 @@ EFT
 e-government (e-gov)
 Egress Filtering
 EHR
-ei
 EIA
 EIEMA
 EIK
@@ -2222,7 +2161,6 @@ E-ISAC
 EIT
 EKEYx(Y)
 EKMS
-EL
 Electric Power Research Institute
 Electrically Erasable Programmable Read-Only Memory
 Electricity ISAC
@@ -2265,7 +2203,6 @@ Elliptic Curve Diffie-Hellman
 Elliptic Curve Digital Signature Algorithm
 Elliptic Curve DSA
 Elliptic Curve over G[2N]
-EM
 e-mail
 embedded computer
 Embedded Control Unit
@@ -2361,7 +2298,6 @@ Environmental Failure Protection
 Environmental Failure Testing
 Environmental Support
 Environmental testing
-EO
 EPAL
 EPC
 EPCIS
@@ -2382,7 +2318,6 @@ Equipment Identity Register
 Equipment Radiation TEMPEST Zone
 Equivalent Process
 Equivalent security domains
-ER
 E-RAB
 Erasable, Programmable, Read-Only Memory
 erasure
@@ -2537,7 +2472,6 @@ Fault tolerance
 fault tolerant
 fault tree analysis
 Faulty Operation
-FB
 FBCA
 FBCA OA
 FBCA Operational Authority
@@ -2714,7 +2648,6 @@ FMECA
 FMFIA
 FMR
 FMS
-fn
 FNMR
 FOCI
 focused observation
@@ -2757,7 +2690,6 @@ FPKIPA
 FPKISC
 FP-uRPF
 FQDN
-FR
 Frame Check Sequence
 Framework
 Free and Open Source Software
@@ -2774,7 +2706,6 @@ FRN
 Front-Channel Communication
 FRR
 FrSIRT
-FS
 FTE
 FTP
 FTR
@@ -2793,7 +2724,6 @@ functional testing
 Functionality Testing
 FUS
 Fuzz Testing
-FY
 Galois Counter Mode (algorithm)
 Galois Message Authentication Code
 Galois/Counter Mode
@@ -2802,8 +2732,6 @@ GAO
 gateway
 GATT
 Gaussian Frequency-Shift Keying
-GB
-Gb
 GbE
 Gbps
 GCA
@@ -2890,7 +2818,6 @@ GPRS Location Information
 GPS
 GPT
 GPU
-GR
 Graceful Restart
 Graduated Security
 Gramm-Leach-Bliley Act
@@ -2938,14 +2865,11 @@ GUI
 GUID
 GUID Partition Table
 GUTI
-GW
 GWES
 gxy
 H(M)
 H(x)
 H.323
-H0
-HA
 hacker
 HACS
 HAIPE
@@ -3024,7 +2948,6 @@ HERP
 Hertz
 HEW
 Hewlett Packard Enterprise
-HF
 HFEv
 HFS
 HHS
@@ -3100,9 +3023,7 @@ House of Representatives
 HPA
 HPE
 HPFS
-HR
 HRCyber
-HS
 HSPA
 HSPD
 HSPD-12
@@ -3137,7 +3058,6 @@ Hyper-V virtual hard disk
 hypervisor
 Hypothesis (Alternative)
 Hypothesis (Null)
-Hz
 I&A
 I&W
 I/O
@@ -3146,7 +3066,6 @@ I2BS
 I2C
 I2P
 I3P
-IA
 IA architecture
 IA infrastructure
 IA product
@@ -3176,7 +3095,6 @@ IBC
 IBE
 iBGP
 IBSS
-IC
 ICAM
 ICANN
 ICAO
@@ -3206,7 +3124,6 @@ ICV
 ICV1
 ICV2
 ICV3
-ID
 Idaho National Laboratory
 IdAM
 IDART
@@ -3269,7 +3186,6 @@ IDP, IDR, IDU, IDV
 IDPS
 IDS
 ID-WSF
-IE
 IEAK
 IEC
 IED
@@ -3277,7 +3193,6 @@ IEEE
 IETF
 IFC
 IFIP
-IG
 igamc
 IGMP
 IGP
@@ -3290,14 +3205,11 @@ IIF
 IIHI
 IIP
 IIS
-Ij
-IK
 IKE
 IKE version 1
 IKE version 2
 ILK
 ILTK
-IM
 Image
 IMAP
 IMEI
@@ -3633,14 +3545,12 @@ Invocation Field
 InvShiftRows()
 InvSubBytes()
 Inward-Facing
-IO
 IoC
 IODEF
 IoMT
 IOPS
 IOS
 IoT
-IP
 IP Multimedia Subsystem
 IP Payload Compression Protocol
 IP security (IPSec)
@@ -3654,7 +3564,6 @@ IPsec-WIT
 IPv4
 IPv6
 IPX
-IR
 IRB
 IRC
 IrDA
@@ -3731,7 +3640,6 @@ ITU
 ITU-T
 ITU-TSS
 IUT
-IV
 IV&V
 IVA
 Ivn
@@ -3770,7 +3678,6 @@ Joint Test Action Group
 JOSE
 Journal of Research of the National Institute of Standards and Technology
 Journaling Flash File System, Version 2
-JP
 JPEG
 JRE
 JSM
@@ -3790,8 +3697,6 @@ JVM
 JWT
 k mod p
 K(i)
-K1
-K2
 KAK
 k-anonymity
 KAS
@@ -3801,13 +3706,11 @@ KAS2-basic
 KAS2-bilateral-confirmation
 KAS2-Party_U-confirmation
 KAS2-Party_V-confirmation
-KB
 KBA
 KBits
 KBKDF
 Kbps
 KBV
-KC
 KDC
 KDF
 KDK
@@ -3939,16 +3842,13 @@ Key-usage period
 Keyword
 key-wrap algorithm
 Key-wrapping key
-KG
 KGD
 kHz
-KI
 Kill Command
 Kilobits per second
 Kilobyte
 Kilohertz
 Klen
-KM
 KMAC
 KMC
 KME
@@ -3970,14 +3870,12 @@ Knowledge-Based Authentication
 Knowledge-Based Verification (KBV)
 Known Data
 Known Hosts File
-KO
 KOA
 KOA agent
 KOA manager (KOAM)
 KOA registration manager
 KOAM
 Kolmogorov-Smirnov Test
-KP
 KPC
 KPF
 KPI
@@ -3992,7 +3890,6 @@ KTS-KEM-KWS-basic
 KTS-KEM-KWS-Party_V-confirmation
 KTS-OAEP-basic
 KTS-OAEP-Party_V-confirmation
-KW
 KWK
 kwkBits
 KWP
@@ -4039,7 +3936,6 @@ LDA
 LDAP
 LDAPS
 l-diversity
-LE
 Lean Execution System
 Learning
 Learning Continuum
@@ -4063,7 +3959,6 @@ Letter of Interest
 level of assurance
 level of risk
 Level of Significance (a)
-LF
 LFSR
 lg(x)
 life cycle
@@ -4105,7 +4000,6 @@ Live Entropy Source
 LKH
 LKM
 LLP
-LM
 LMD
 LMD/KP
 LND
@@ -4183,7 +4077,6 @@ low probability of positioning
 Low Rate Initial Production
 low-impact system
 low-power transmitter
-LP
 LPC
 LPD
 LPI
@@ -4205,7 +4098,6 @@ LVP
 LXC
 M&S
 M2M
-MA
 MAC
 MAC algorithm
 MAC Generation
@@ -4317,7 +4209,6 @@ Maximum Prefix Length
 Maximum Tolerable Downtime
 Maximum Transmission Unit
 maxlength
-MB
 Mbps
 MBR
 MBSA
@@ -4325,14 +4216,12 @@ MBSE
 MC/DC
 MCPTT
 MCU
-MD
 MD5
 MDA
 MDISS
 MDM
 MDRAP
 MDS
-ME
 Measured service
 measurement
 measures
@@ -4471,7 +4360,6 @@ MME
 MMS
 MMT
 MNO
-MO
 MOA
 Mobile Application Management
 mobile code
@@ -4521,7 +4409,6 @@ MOU
 MOU/A
 Mount Airey Group
 Moving Target Defense
-MP
 MPLS
 MPPE
 MQTT
@@ -4529,8 +4416,6 @@ MQV
 MRI
 MRT
 MRTD
-Ms
-MS
 MSA
 MSB
 MSBm(X)
@@ -4579,8 +4464,6 @@ Multipurpose Internet Mail Extensions (MIME)
 multi-releasable
 mutual authentication
 MVNO
-mW
-MX
 N/A
 NAC
 NACAM
@@ -4670,9 +4553,7 @@ Native virtualization
 NATO
 NAT-T
 Natural Language Policy
-Nb
 nBits
-NC
 NCCIC
 NCCoE
 NCEP
@@ -4685,7 +4566,6 @@ NDA
 NDAC
 NDI
 NDS/IP
-NE
 NEA
 Near Field Communication (NFC)
 need-to-know
@@ -4765,7 +4645,6 @@ NGAC
 NGAC-FA
 NGAC-GOADS
 NGAC-IRPADS
-NH
 NHTSA
 NIAC
 NIAP
@@ -4793,7 +4672,6 @@ NIST-allowed
 NIST-approved
 NISTIR
 NITRD
-Nk
 NLECTC-NE
 nLen
 NLOS
@@ -4853,10 +4731,8 @@ NPIVP
 NPPI
 NPS
 NPSBN
-Nr
 NRBG
 NREL
-NS
 NS/EP
 NSA
 NSA/CSS
@@ -4895,7 +4771,6 @@ NTP
 Nuclear Command and Control Information Assurance Material (NCCIM)
 Null
 null
-NV
 NVD
 NVLAP
 NW3C
@@ -4934,7 +4809,6 @@ Octet Length
 Octet String
 ODBC
 ODNI
-OECD
 OEM
 OEM Service Release 2
 OEMs
@@ -4969,7 +4843,6 @@ OID
 OIG
 OIMO
 OISM
-Oj
 OLA
 OLE
 OLE for Process Control
@@ -5097,7 +4970,6 @@ Originator Controlled
 Originator-usage period
 Orphan block
 Orthogonal Frequency Division Multiplexing
-OS
 OSCAL
 OSDP
 OSHA
@@ -5108,7 +4980,6 @@ OSR2
 OSS
 OSSEC
 OSSTMM
-OT
 OTA
 OTAD
 OTAR
@@ -5120,7 +4991,6 @@ OTP
 OTS
 OTT
 O-TTPS
-OU
 out of band
 Outer Firewall
 Outlook E-mail Security Update
@@ -5152,7 +5022,6 @@ P.L.
 P_HASH
 P1,…,P64
 P2P
-PA
 PAA
 PaaS
 PAC
@@ -5216,7 +5085,6 @@ Payment Card Industry Data Security Standard
 PBAC
 PBCC
 PBX
-PC
 PC/SC
 PCAP
 PCI
@@ -5238,7 +5106,6 @@ PDN
 PDP
 PDR
 PDS
-PE
 PEAP
 PED
 Peer Authorization Database
@@ -5335,7 +5202,6 @@ Physical Security
 Physically Isolated Network
 physically protected space (PPS)
 Physical-security compromise
-PI
 PIA
 Piconet
 PID
@@ -5361,7 +5227,6 @@ PIV-I
 Pivot
 PIX
 Pixels Per Inch
-Pj
 PKC
 PKCS
 PKE
@@ -5373,7 +5238,6 @@ PKIX-CMP
 PKM
 PKMv1
 PKMv2
-PL
 plaintext
 Plaintext data
 Plan Coordinator
@@ -5387,7 +5251,6 @@ platform IT (PIT)
 platform IT (PIT) system
 PLC
 Plen
-PM
 PMA
 PMEF
 PMI
@@ -5397,8 +5260,6 @@ PML
 PMP
 PMS
 PMTU
-PN
-Pn
 PNG
 pNIC
 POA&M
@@ -5459,7 +5320,6 @@ Potentially Harmful Application
 potentially identifiable personal information
 PoW
 Power-on self-test
-PP
 PPA
 PPC
 PPD
@@ -5470,7 +5330,6 @@ PPTP
 PPVPN
 PQC
 PQCrypto
-PR
 PR.AC
 PR.AT
 PR.DS
@@ -5665,7 +5524,6 @@ proxy agent
 proxy server
 PRP
 PRSN
-PS
 PSCR
 Pseudo Random Number Generator (PRNG)
 pseudonym
@@ -5683,7 +5541,6 @@ PSK
 PSN
 PSS
 PSTN
-pt
 PTK
 PTP
 PUB
@@ -5720,7 +5577,6 @@ Push-To-Talk (PTT)
 P-value
 PWA
 PXE
-PY
 QA/QC
 Qe,U, Qe,V
 QEMU (Quick Emulator)
@@ -5728,7 +5584,6 @@ qInv
 QMS
 QoP
 QoS
-QR
 Qs,U, Qs,V
 quadrant
 qualification
@@ -5751,7 +5606,6 @@ Quick Response (code)
 Quote
 R&D
 R/W
-RA
 RACE Integrity Primitives Evaluation Message Digest
 RAdAC
 Radio Access Network
@@ -5792,18 +5646,15 @@ Rapid elasticity
 RAR
 Rate
 Raw data
-Rb
 RBAC
 RBG
 RBG seed
-RC
 RC.CO
 RC4
 RCE
 RCFL
 Rcon[]
 RCP
-RD
 RDBMS
 RDP
 RDS
@@ -5998,7 +5849,6 @@ Revoke a Certificate
 Revoked Key Notification
 Revoked key notification (RKN)
 Reward system
-RF
 RF Subsystem
 RFC
 RFD
@@ -6056,7 +5906,6 @@ RMA
 RMF
 RMM
 RMON
-RN
 RNG
 RNG seed
 ROA
@@ -6100,7 +5949,6 @@ Routing Information Base
 Routing Information Protocol
 ROV
 Row Level Security
-RP
 RPA
 RPC
 RPKI
@@ -6109,12 +5957,10 @@ RPKI Repository Delta Protocol
 RPKI-to-router protocol
 RPO
 RPs
-RR
 RRC
 RRDP
 RRL
 RRSIG
-RS
 RS.CO
 RS2
 RS2 Technologies
@@ -6134,7 +5980,6 @@ RSSI
 RSVP
 RSWG
 rsync
-RT
 RTA
 RTBH
 RTF
@@ -6155,15 +6000,12 @@ Run (of output sequences)
 Runs Test
 Runtime
 RUT
-rv
 rv[0…b]
 rv_length_indicator
 RVTM
 S/MIME
 S/MIME Certificate Association (Resource Record)
 S/RTBH
-s2
-SA
 SA&A
 SaaS
 SABI
@@ -6203,14 +6045,12 @@ SAR
 Sarbanes-Oxley Act
 SARD
 SATE
-Satisfaction
 SAV
 SBA
 SBH
 SBIR
 S-box
 SBU
-SC
 SC 37
 SCA
 SCADA
@@ -6260,7 +6100,6 @@ SCRM
 SCSI
 SCTP
 SCW
-SD
 SDK
 SDL
 SDLC
@@ -6270,7 +6109,6 @@ SDO
 SDP
 SDR
 SDS
-SE
 SEC
 SECAM
 SecCM
@@ -6542,7 +6380,6 @@ Session Initiation Protocol
 Set Point
 Setting the bar
 Set-User-ID
-SF
 SFA
 SFC
 SFTP
@@ -6574,7 +6411,6 @@ Should
 Shred
 Shrinkage
 SHS
-SI
 SIA
 SIAO
 SID
@@ -6634,7 +6470,6 @@ SKL
 SLA
 Slack Space
 SLURM
-SM
 Small and Medium-size Business
 Small business
 Small Business Administration
@@ -6659,12 +6494,10 @@ SMP
 SMS
 SMS Chat
 SMTP
-Sn
 Snapshot
 sniffer
 SNL
 SNMP
-SO
 SOA
 SOAP
 SOAP Header
@@ -6721,7 +6554,6 @@ Sources Sought Notice
 Southwestern Ohio Council for Higher Education
 SOW
 SOX
-SP
 SP 800-XXX
 SP3
 spam
@@ -6764,7 +6596,6 @@ SQL
 SQL injection
 SQLi
 SQN
-SR
 SRAM
 SRB
 SRES
@@ -6772,7 +6603,6 @@ SRG
 SRM
 SRR
 SRTM
-SS
 SSA
 SSAA
 SSCA
@@ -6834,7 +6664,6 @@ Status Word
 STD
 STE
 Steady State
-steganography
 STEM
 STIG
 STIX
@@ -6864,7 +6693,6 @@ STS
 STT
 STU
 STVMG
-SU
 subaccount
 subassembly
 SubBytes()
@@ -7024,11 +6852,9 @@ systems security officer (SSO)
 system-specific control
 system-specific security control
 System-Theoretic Process Analysis
-SZ
 T(x, k)
 T1 Line
 T3 Line
-TA
 Tabletop Exercise
 TACACS
 TACACS+
@@ -7061,9 +6887,7 @@ Target Vulnerability Validation Techniques
 Targeted security strength
 task
 TAXII
-TB
 TbitLen(X)
-TC
 TCB
 TCBC
 TCBC-I
@@ -7076,14 +6900,12 @@ TCP
 TCP/IP
 TCP/UDP
 TCSEC
-TD
 TDEA
 TDEA Electronic Codebook
 TDEA Key Wrap
 TDES
 TDM
 TDMA
-TE
 TECB
 technical community (TC)
 Technical Controls
@@ -7223,8 +7045,6 @@ timestamped_data
 TIPC
 TIR
 TIS
-Tj
-TK
 TKIP
 TKIP Sequence Counter
 TKW
@@ -7261,7 +7081,6 @@ TPDU
 TPI
 TPM
 TPO
-TR
 traceability analysis
 traceability matrix
 Traceable
@@ -7357,7 +7176,6 @@ Trusted Timestamp Authority (TTA)
 trustworthiness
 trustworthiness (system)
 trustworthy information system
-TS
 TSC
 TSCH
 TSCM
@@ -7411,9 +7229,7 @@ U.S. person
 U.S.C.
 U.S.-controlled facility
 U.S.-controlled space
-U1
 U2F
-UA
 UAC
 UART
 UAS
@@ -7425,16 +7241,13 @@ UCE
 UDDI
 UDF
 UDP
-UE
 UEA
 UEFI
 UFS
 UHF
-UI
 UIA
 UICC
 UIS
-UL
 Ultra High Frequency
 Ultra Wideband
 Ultrawideband
@@ -7519,7 +7332,6 @@ UPS
 URI
 URL
 uRPF
-US
 Usability
 USB
 USC
@@ -7550,7 +7362,6 @@ Utilities Telecom Council
 UTM
 UTS
 UTSA
-Uu
 UUID
 UWB
 Valid
@@ -7574,18 +7385,15 @@ VARIABLEn
 Variable-value configuration
 Variable-value configuration coverage
 variant
-VB
 VB.NET
 VBA
 VBS
 VBScript
-VC
 Vcc
 VCI
 vCPU
 VCU
 VDI
-VE
 Vehicle Control Unit
 Vendor
 Vendor Evidence
@@ -7631,9 +7439,7 @@ Visual Basic for Applications
 Visual Basic Script
 Visual Basic.NET
 VLAN
-VM
 VMM
-Vn
 Vn(obs)
 VNC
 VNI
@@ -7681,7 +7487,6 @@ WAVE
 Wavelet Scalar Quantization
 WAYF
 WBS
-WD
 WDS
 Weakly Bound Credentials
 Weapons System
@@ -7711,7 +7516,6 @@ Well-formed
 Well-Formed CPE Name
 WEP
 WFP
-WG
 whaling
 Where Are You From?
 White Box Testing
@@ -7790,9 +7594,7 @@ wrapping function
 Write
 Write Once, Read Many
 Write Protection
-Write-Blocker
-WS
-WSDL
+Write-BlockerWSDL
 WSH
 WS-I
 WSQ
@@ -7813,7 +7615,6 @@ X.509 public key certificate
 X<< 1
 X>> 1
 x·y
-X2
 X2(obs)
 XACML
 XAP
@@ -7821,9 +7622,7 @@ XCBC
 XCCDF
 XCCDF Content
 XEX Tweakable Block Cipher with Ciphertext Stealing
-Xi
 XIP
-xj
 XKMS
 XML
 XML Administration Protocol
@@ -7852,9 +7651,7 @@ XSLT
 XSS
 XTS
 xU, xV
-xy
 yU, yV
-Ze
 zero day attack
 zero fill
 Zero-Day Attack
@@ -7864,6 +7661,5 @@ Zero-Knowledge Password Protocol
 zone apex
 zone of control
 Zone Signing Key (ZSK)
-Zs
 ZSK
 λ(n)
