@@ -35,4 +35,4 @@ const cveProvider = async () => {
   }
 };
 
-exports.getCveFiles = cveProvider;
+cveProvider();
