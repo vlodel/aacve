@@ -58,7 +58,7 @@ const cve = {
   analysisSearch: async (body) => {
     try {
       var result = [];
-      //console.log(body.filters);
+
       for (let i = 0; i < body.filters.length; i++) {
         var filters = body.filters[i].split(' ');
 
@@ -123,13 +123,12 @@ const cve = {
           avgV3.push(avg);
         }
 
-        var resultJson = {
+        result.push({
           id: body.filters[i].toUpperCase(),
           count: countCurrentFilterResult,
           avgBaseScoreV2: Number(parseFloat(avgV2[0].avg).toFixed(2)),
           avgBaseScoreV3: Number(parseFloat(avgV3[0].avg).toFixed(2)),
-        };
-        result.push(resultJson);
+        });
       }
 
       return result;

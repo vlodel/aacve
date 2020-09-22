@@ -41,6 +41,111 @@ const securityTerms = [];
 const articlesMetadata = [];
 const finalData = [];
 
+const addDataToResult = async (
+  articleTitle,
+  issue,
+  URL,
+  filtersResults,
+  securityTerms,
+  securityTermsScore
+) => {
+  result.push({
+    articleTitle: articleTitle,
+    issue: issue,
+    URL: URL,
+    filter1:
+      typeof filtersResults[0].id === 'undefined'
+        ? 'no filter'
+        : filtersResults[0].id,
+    noVulnerabilitiesFilter1:
+      typeof filtersResults[0].count === 'undefined'
+        ? '0'
+        : filtersResults[0].count,
+    avgBaseScoreV2Filter1:
+      typeof filtersResults[0].avgBaseScoreV2 === 'undefined'
+        ? '0'
+        : filtersResults[0].avgBaseScoreV2,
+    avgBaseScoreV3Filter1:
+      typeof filtersResults[0].avgBaseScoreV3 === 'undefined'
+        ? '0'
+        : filtersResults[0].avgBaseScoreV3,
+    filter2:
+      typeof filtersResults[1].id === 'undefined'
+        ? 'no filter'
+        : filtersResults[1].id,
+    noVulnerabilitiesFilter2:
+      typeof filtersResults[1].count === 'undefined'
+        ? '0'
+        : filtersResults[1].count,
+    avgBaseScoreV2Filter2:
+      typeof filtersResults[1].avgBaseScoreV2 === 'undefined'
+        ? '0'
+        : filtersResults[1].avgBaseScoreV2,
+    avgBaseScoreV3Filter2:
+      typeof filtersResults[1].avgBaseScoreV3 === 'undefined'
+        ? '0'
+        : filtersResults[1].avgBaseScoreV3,
+    filter3:
+      typeof filtersResults[2].id === 'undefined'
+        ? 'no filter'
+        : filtersResults[2].id,
+    noVulnerabilitiesFilter3:
+      typeof filtersResults[2].count === 'undefined'
+        ? '0'
+        : filtersResults[2].count,
+    avgBaseScoreV2Filter3:
+      typeof filtersResults[2].avgBaseScoreV2 === 'undefined'
+        ? '0'
+        : filtersResults[2].avgBaseScoreV2,
+    avgBaseScoreV3Filter3:
+      typeof filtersResults[2].avgBaseScoreV3 === 'undefined'
+        ? '0'
+        : filtersResults[2].avgBaseScoreV3,
+    filter4:
+      typeof filtersResults[3].id === 'undefined'
+        ? 'no filter'
+        : filtersResults[3].id,
+    noVulnerabilitiesFilter4:
+      typeof filtersResults[3].count === 'undefined'
+        ? '0'
+        : filtersResults[3].count,
+    avgBaseScoreV2Filter4:
+      typeof filtersResults[3].avgBaseScoreV2 === 'undefined'
+        ? '0'
+        : filtersResults[3].avgBaseScoreV2,
+    avgBaseScoreV3Filter4:
+      typeof filtersResults[3].avgBaseScoreV3 === 'undefined'
+        ? '0'
+        : filtersResults[3].avgBaseScoreV3,
+    filter5:
+      typeof filtersResults[4].id === 'undefined'
+        ? 'no filter'
+        : filtersResults[4].id,
+    noVulnerabilitiesFilter5:
+      typeof filtersResults[4].count === 'undefined'
+        ? '0'
+        : filtersResults[4].count,
+    avgBaseScoreV2Filter5:
+      typeof filtersResults[4].avgBaseScoreV2 === 'undefined'
+        ? '0'
+        : filtersResults[4].avgBaseScoreV2,
+    avgBaseScoreV3Filter5:
+      typeof filtersResults[4].avgBaseScoreV3 === 'undefined'
+        ? '0'
+        : filtersResults[4].avgBaseScoreV3,
+    allFiltersAvgBaseScoreV2:
+      typeof allFiltersAvgBaseScoreV2 === 'undefined'
+        ? '0'
+        : Number(allFiltersAvgBaseScoreV2.toFixed(3)),
+    allFiltersAvgBaseScoreV3:
+      typeof allFiltersAvgBaseScoreV3 === 'undefined'
+        ? 0
+        : Number(allFiltersAvgBaseScoreV3.toFixed(3)),
+    securityTerms: securityTerms,
+    securityTermsScore: securityTermsScore,
+  });
+};
+
 const IEanalyzer = async () => {
   fs.createReadStream(path.join(__dirname, './securityTerms_v2.csv'))
     .pipe(csv(['term', 'score']))
@@ -144,111 +249,14 @@ const IEanalyzer = async () => {
                           (data) => data['articleTitle'] === fileName
                         )
                       ) {
-                        finalData.push({
-                          articleTitle: fileName,
-                          issue: issue,
-                          URL: URL,
-                          filter1:
-                            typeof filtersResults[0].id === 'undefined'
-                              ? 'no filter'
-                              : filtersResults[0].id,
-                          noVulnerabilitiesFilter1:
-                            typeof filtersResults[0].count === 'undefined'
-                              ? '0'
-                              : filtersResults[0].count,
-                          avgBaseScoreV2Filter1:
-                            typeof filtersResults[0].avgBaseScoreV2 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[0].avgBaseScoreV2,
-                          avgBaseScoreV3Filter1:
-                            typeof filtersResults[0].avgBaseScoreV3 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[0].avgBaseScoreV3,
-                          filter2:
-                            typeof filtersResults[1].id === 'undefined'
-                              ? 'no filter'
-                              : filtersResults[1].id,
-                          noVulnerabilitiesFilter2:
-                            typeof filtersResults[1].count === 'undefined'
-                              ? '0'
-                              : filtersResults[1].count,
-                          avgBaseScoreV2Filter2:
-                            typeof filtersResults[1].avgBaseScoreV2 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[1].avgBaseScoreV2,
-                          avgBaseScoreV3Filter2:
-                            typeof filtersResults[1].avgBaseScoreV3 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[1].avgBaseScoreV3,
-                          filter3:
-                            typeof filtersResults[2].id === 'undefined'
-                              ? 'no filter'
-                              : filtersResults[2].id,
-                          noVulnerabilitiesFilter3:
-                            typeof filtersResults[2].count === 'undefined'
-                              ? '0'
-                              : filtersResults[2].count,
-                          avgBaseScoreV2Filter3:
-                            typeof filtersResults[2].avgBaseScoreV2 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[2].avgBaseScoreV2,
-                          avgBaseScoreV3Filter3:
-                            typeof filtersResults[2].avgBaseScoreV3 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[2].avgBaseScoreV3,
-                          filter4:
-                            typeof filtersResults[3].id === 'undefined'
-                              ? 'no filter'
-                              : filtersResults[3].id,
-                          noVulnerabilitiesFilter4:
-                            typeof filtersResults[3].count === 'undefined'
-                              ? '0'
-                              : filtersResults[3].count,
-                          avgBaseScoreV2Filter4:
-                            typeof filtersResults[3].avgBaseScoreV2 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[3].avgBaseScoreV2,
-                          avgBaseScoreV3Filter4:
-                            typeof filtersResults[3].avgBaseScoreV3 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[3].avgBaseScoreV3,
-                          filter5:
-                            typeof filtersResults[4].id === 'undefined'
-                              ? 'no filter'
-                              : filtersResults[4].id,
-                          noVulnerabilitiesFilter5:
-                            typeof filtersResults[4].count === 'undefined'
-                              ? '0'
-                              : filtersResults[4].count,
-                          avgBaseScoreV2Filter5:
-                            typeof filtersResults[4].avgBaseScoreV2 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[4].avgBaseScoreV2,
-                          avgBaseScoreV3Filter5:
-                            typeof filtersResults[4].avgBaseScoreV3 ===
-                            'undefined'
-                              ? '0'
-                              : filtersResults[4].avgBaseScoreV3,
-                          allFiltersAvgBaseScoreV2:
-                            typeof allFiltersAvgBaseScoreV2 === 'undefined'
-                              ? '0'
-                              : Number(allFiltersAvgBaseScoreV2.toFixed(3)),
-                          allFiltersAvgBaseScoreV3:
-                            typeof allFiltersAvgBaseScoreV3 === 'undefined'
-                              ? 0
-                              : Number(allFiltersAvgBaseScoreV3.toFixed(3)),
-                          securityTerms: csvSecurityTerms,
-                          securityTermsScore: csvSecurityTermsScore,
-                        });
+                        addDataToResult(
+                          finalData,
+                          issue,
+                          URL,
+                          filtersResults,
+                          csvSecurityTerms,
+                          csvSecurityTermsScore
+                        );
                       } else {
                         let existingRow = finalData.find(
                           (data) => data['articleTitle'] === fileName
@@ -308,101 +316,14 @@ const IEanalyzer = async () => {
                     console.log(allFiltersAvgBaseScoreV2);
                     console.log(allFiltersAvgBaseScoreV3);
 
-                    finalData.push({
-                      articleTitle: fileName,
-                      issue: issue,
-                      URL: URL,
-                      filter1:
-                        typeof filtersResults[0].id === 'undefined'
-                          ? 'no filter'
-                          : filtersResults[0].id,
-                      noVulnerabilitiesFilter1:
-                        typeof filtersResults[0].count === 'undefined'
-                          ? '0'
-                          : filtersResults[0].count,
-                      avgBaseScoreV2Filter1:
-                        typeof filtersResults[0].avgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : filtersResults[0].avgBaseScoreV2,
-                      avgBaseScoreV3Filter1:
-                        typeof filtersResults[0].avgBaseScoreV3 === 'undefined'
-                          ? '0'
-                          : filtersResults[0].avgBaseScoreV3,
-                      filter2:
-                        typeof filtersResults[1].id === 'undefined'
-                          ? 'no filter'
-                          : filtersResults[1].id,
-                      noVulnerabilitiesFilter2:
-                        typeof filtersResults[1].count === 'undefined'
-                          ? '0'
-                          : filtersResults[1].count,
-                      avgBaseScoreV2Filter2:
-                        typeof filtersResults[1].avgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : filtersResults[1].avgBaseScoreV2,
-                      avgBaseScoreV3Filter2:
-                        typeof filtersResults[1].avgBaseScoreV3 === 'undefined'
-                          ? '0'
-                          : filtersResults[1].avgBaseScoreV3,
-                      filter3:
-                        typeof filtersResults[2].id === 'undefined'
-                          ? 'no filter'
-                          : filtersResults[2].id,
-                      noVulnerabilitiesFilter3:
-                        typeof filtersResults[2].count === 'undefined'
-                          ? '0'
-                          : filtersResults[2].count,
-                      avgBaseScoreV2Filter3:
-                        typeof filtersResults[2].avgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : filtersResults[2].avgBaseScoreV2,
-                      avgBaseScoreV3Filter3:
-                        typeof filtersResults[2].avgBaseScoreV3 === 'undefined'
-                          ? '0'
-                          : filtersResults[2].avgBaseScoreV3,
-                      filter4:
-                        typeof filtersResults[3].id === 'undefined'
-                          ? 'no filter'
-                          : filtersResults[3].id,
-                      noVulnerabilitiesFilter4:
-                        typeof filtersResults[3].count === 'undefined'
-                          ? '0'
-                          : filtersResults[3].count,
-                      avgBaseScoreV2Filter4:
-                        typeof filtersResults[3].avgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : filtersResults[3].avgBaseScoreV2,
-                      avgBaseScoreV3Filter4:
-                        typeof filtersResults[3].avgBaseScoreV3 === 'undefined'
-                          ? '0'
-                          : filtersResults[3].avgBaseScoreV3,
-                      filter5:
-                        typeof filtersResults[4].id === 'undefined'
-                          ? 'no filter'
-                          : filtersResults[4].id,
-                      noVulnerabilitiesFilter5:
-                        typeof filtersResults[4].count === 'undefined'
-                          ? '0'
-                          : filtersResults[4].count,
-                      avgBaseScoreV2Filter5:
-                        typeof filtersResults[4].avgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : filtersResults[4].avgBaseScoreV2,
-                      avgBaseScoreV3Filter5:
-                        typeof filtersResults[4].avgBaseScoreV3 === 'undefined'
-                          ? '0'
-                          : filtersResults[4].avgBaseScoreV3,
-                      allFiltersAvgBaseScoreV2:
-                        typeof allFiltersAvgBaseScoreV2 === 'undefined'
-                          ? '0'
-                          : Number(allFiltersAvgBaseScoreV2.toFixed(3)),
-                      allFiltersAvgBaseScoreV3:
-                        typeof allFiltersAvgBaseScoreV3 === 'undefined'
-                          ? 0
-                          : Number(allFiltersAvgBaseScoreV3.toFixed(3)),
-                      securityTerms: '',
-                      securityTermsScore: 0,
-                    });
+                    addDataToResult(
+                      finalData,
+                      issue,
+                      URL,
+                      filtersResults,
+                      '',
+                      0
+                    );
                   }
                 }
               }
