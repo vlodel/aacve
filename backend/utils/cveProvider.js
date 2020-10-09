@@ -12,18 +12,26 @@ const requestFile = (URL) => {
 
 const cveProvider = async () => {
   try {
-    var linksArray = [];
+    const linksArray = [];
 
     const response = await got('https://nvd.nist.gov/vuln/data-feeds');
     const $ = cheerio.load(response.body);
-    var tableRowsArray = $('#form').find('.xml-feed-data-row');
+    const tableRowsArray = $('#bodyNvdLayout').find('.xml-feed-data-row');
     tableRowsArray.each(function (index, element) {
-      if ($(element).attr('data-testid').includes('vuln-json-feed-row-zip')) {
-        var td = $(element).find('td')[0];
-        var anchor = $(td).find('a')[0];
-        var link = $(anchor).attr('href');
-
-        linksArray.push(link);
+      if (
+        $(element).attr('data-testid').includes('-zip') &&
+        !$(element).attr('data-testid').includes('tableCveFeeds0-') &&
+        !$(element).attr('data-testid').includes('tableCveFeeds1-')
+      ) {
+        const td = $(element).find('td')[0];
+        const anchor = $(td).find('a')[0];
+        if (
+          $(anchor).attr('href').includes('.json.zip') &&
+          !$(anchor).attr('href').includes('nvdcpematch-1.0')
+        ) {
+          const link = 'https://nvd.nist.gov' + $(anchor).attr('href');
+          linksArray.push(link);
+        }
       }
     });
 
