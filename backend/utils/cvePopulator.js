@@ -3,62 +3,60 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const cveSchema = require('../models/cve');
+const path = require('path');
 
 const server = '127.0.0.1:27017';
 const database = 'aacve';
+
 const cveModel = mongoose.model('cve', cveSchema);
 
-mongoose
-  .connect(`mongodb://${server}/${database}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(async () => {
-    console.log('MongoDB connection successful.');
-    const files = fs.readdirSync('../cves');
-    if (!files) {
-      console.log(`Unable to read directory`);
-    } else {
-      for (const filePath of files) {
-        const file = fs.readFileSync('../cves/' + filePath);
-        let jsonFile = JSON.parse(file);
-        var cveArray = jsonFile.CVE_Items;
+const updateDatabase = async () => {
+  mongoose
+    .connect(`mongodb://${server}/${database}`, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    .then(async () => {
+      console.log('MongoDB connection successful.');
+      const files = fs.readdirSync(path.join(__dirname, '../cves'));
+      if (!files) {
+        console.log(`Unable to read directory`);
+      } else {
+        for (const filePath of files) {
+          const file = fs.readFileSync(
+            path.join(__dirname, '../cves/' + filePath)
+          );
+          let jsonFile = JSON.parse(file);
+          var cveArray = jsonFile.CVE_Items;
 
-        for (const cveItem of cveArray) {
-          if (
-            !cveItem.cve.description.description_data[0].value.includes(
-              '** REJECT **'
-            )
-          ) {
-            let optimizedCve = new cveModel({
-              id: cveItem.cve.CVE_data_meta.ID,
-              references: cveItem.cve.references,
-              description: cveItem.cve.description,
-              impact: cveItem.impact,
-              publishedDate: cveItem.publishedDate,
-              lastModifiedDate: cveItem.lastModifiedDate,
-            });
-            cveModel.findOneAndUpdate(
-              { id: optimizedCve.id },
-              optimizedCve,
-              { upsert: true, useFindAndModify: false },
-              (err, doc) => {
-                if (err) console.log(err);
-              }
-            );
-          }
+          await cveModel.bulkWrite(
+            cveArray.map((cveObject) => ({
+              updateOne: {
+                filter: {
+                  id: cveObject.cve.CVE_data_meta.ID,
+                  references: cveObject.cve.references,
+                  description: cveObject.cve.description,
+                  impact: cveObject.impact,
+                  publishedDate: cveObject.publishedDate,
+                  lastModifiedDate: cveObject.lastModifiedDate,
+                },
+                update: cveObject,
+                upsert: true,
+              },
+            }))
+          );
+
+          console.log(filePath + ' read.');
         }
-        console.log(filePath + ' read.');
       }
-    }
-    // mongoose.disconnect();
-    // console.log('Finished updating the cves database.');
-    // console.log('MongoDB connection ended.');
-  })
-  .then(() => {
-    console.log('Finished updating the cves database.');
-  })
-  .catch((err) => {
-    console.log(`MongoDB connection error: ${err}`);
-  });
+    })
+    .then(() => {
+      console.log('Finished updating the cves database.');
+    })
+    .catch((err) => {
+      console.log(`MongoDB connection error: ${err}`);
+    });
+};
+
+updateDatabase();
