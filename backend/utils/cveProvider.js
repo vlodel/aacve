@@ -10,7 +10,7 @@ const requestFile = (URL) => {
   console.log(`${URL} downloaded.`);
 };
 
-const cveProvider = async () => {
+const getCveFiles = async () => {
   try {
     const linksArray = [];
 
@@ -38,9 +38,11 @@ const cveProvider = async () => {
     linksArray.forEach((link) => {
       requestFile(link);
     });
+
+    console.log('Finished downloading CVE files...');
   } catch (err) {
     console.log(err.message);
   }
 };
 
-cveProvider();
+module.exports = { getCveFiles };

@@ -52,11 +52,11 @@ const updateDatabase = async () => {
       }
     })
     .then(() => {
-      console.log('Finished updating the cves database.');
+      console.log('Finished updating the cves database...');
     })
     .catch((err) => {
       console.log(`MongoDB connection error: ${err}`);
     });
 };
 
-updateDatabase();
+module.exports = { updateDatabase };
