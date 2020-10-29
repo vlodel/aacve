@@ -48,10 +48,31 @@ const analysisSearch = async (req, res) => {
   }
 };
 
+const getCvesByMonth = async (req, res) => {
+  const result = await cveService.getCvesByMonth(req.body);
+  if (result) {
+    res.status(200).send(result);
+  } else {
+    res.status(404).send({ message: 'CVEs not found' });
+  }
+};
+
+const getLatestHighScoreCves = async (req, res) => {
+  const result = await cveService.getLatestHighScoreCves(req.query.skip);
+
+  if (result) {
+    res.status(200).send(result);
+  } else {
+    res.status(404).send({ message: 'CVEs not found' });
+  }
+};
+
 module.exports = {
   getLatestCves,
   getAllCves,
   getNoOfPages,
   getByKeyword,
   analysisSearch,
+  getCvesByMonth,
+  getLatestHighScoreCves,
 };

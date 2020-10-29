@@ -21,11 +21,9 @@ router.get('/getLatestCves', cveController.getLatestCves);
 router.get('/getCves/:page/:windowHeight', cveController.getAllCves);
 router.get('/getNoOfPages/:windowHeight', cveController.getNoOfPages);
 router.get('/getByKeywords/', cveController.getByKeyword);
+router.get('/getCvesByMonth/', cveController.getCvesByMonth);
+router.get('/getLatestHighScoreCves/', cveController.getLatestHighScoreCves);
 router.post('/analysisSearch', cveController.analysisSearch);
-router.post(
-  '/fileUpload',
-  upload.single('document'),
-  fileController.analyzeFile
-);
+router.post('/fileUpload', upload.single('document'), fileController.analyzeFile);
 
 module.exports = router;
