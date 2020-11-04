@@ -23,9 +23,9 @@ Use the cveProvider and the cvePopulator to populate your database.
 
 ```bash
 node cveProvider.js
-node --max-old-space-size=4096 cvePopulator.js
+node cvePopulator.js
 ```
-Change the API_URL environment variable from the front-end to the URL of your back-end.
+Change the API_URL environment variable from the front-end to the address of your back-end.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
