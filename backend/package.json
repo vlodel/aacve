@@ -25,7 +25,7 @@
     "docx-parser": "^0.2.1",
     "express": "^4.17.1",
     "got": "^10.7.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mammoth": "^1.4.11",
     "mongodb": "^3.6.1",
     "mongoose": "^5.10.3",
